@@ -29,6 +29,8 @@ export async function PUT(req: Request, context: any) {
     category: body.category,
     price: Number(body.price),
     description: body.description,
+    advantages: body.advantages,
+    uses: body.uses,
     tags: Array.isArray(body.tags) ? body.tags : [],
     features: Array.isArray(body.features) ? body.features : [],
     images: Array.isArray(body.images) ? body.images : [],

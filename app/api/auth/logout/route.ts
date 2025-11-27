@@ -13,6 +13,5 @@ export async function POST() {
     path: "/",
   });
 
-  // Redirect to login
-  return NextResponse.redirect("/login");
+  return NextResponse.json({ success: true });
 }

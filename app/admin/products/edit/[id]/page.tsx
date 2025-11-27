@@ -1,33 +1,69 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
+
+interface ProductForm {
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  advantages: string;
+  uses: string;
+  stock: number;
+  tags: string[];
+  features: string[];
+  images: string[];
+}
 
 export default function EditProduct() {
   const router = useRouter();
-  const params: any = useParams(); // FIXED
-  const id = params.id; // FIXED
+  const params = useParams();
 
-  const [form, setForm] = useState<any>(null);
+  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
 
+  const [form, setForm] = useState<ProductForm | null>(null);
+
+  /* Tag / Feature Inputs */
   const [tagInput, setTagInput] = useState("");
   const [featureInput, setFeatureInput] = useState("");
-  const [imageInput, setImageInput] = useState("");
 
+  /* Image Upload */
+  const [uploading, setUploading] = useState(false);
+
+  /* ===========================
+          LOAD PRODUCT
+  ============================ */
   useEffect(() => {
     if (!id) return;
 
-    fetch(`/api/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setForm({
-          ...data.product,
-          tags: data.product.tags || [],
-          features: data.product.features || [],
-          images: data.product.images || [],
-        });
+    const loadProduct = async () => {
+      const res = await fetch(`/api/products/${id}`);
+      const data = await res.json();
+
+      if (!data.product) {
+        console.error("No product found");
+        return;
+      }
+
+      const p = data.product;
+
+      setForm({
+        name: p.name || "",
+        category: p.category || "",
+        price: p.price || 0,
+        description: p.description || "",
+        advantages: p.advantages || "",
+        uses: p.uses || "",
+        stock: p.stock || 0,
+        tags: Array.isArray(p.tags) ? p.tags : [],
+        features: Array.isArray(p.features) ? p.features : [],
+        images: Array.isArray(p.images) ? p.images : [],
       });
-  }, [id]); // FIXED: dependency added
+    };
+
+    loadProduct();
+  }, [id]);
 
   if (!form)
     return (
@@ -36,7 +72,42 @@ export default function EditProduct() {
       </p>
     );
 
-  const handleSubmit = async (e: any) => {
+  /* ===========================
+        IMAGE UPLOAD (CLOUDINARY)
+  ============================ */
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+
+    const uploadedUrls: string[] = [];
+
+    for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
+
+      const res = await fetch("/api/upload-image", {
+        method: "POST",
+        body: fd,
+      });
+
+      const data = await res.json();
+
+      if (data.success && data.url) uploadedUrls.push(data.url);
+    }
+
+    setForm((prev) =>
+      prev ? { ...prev, images: [...prev.images, ...uploadedUrls] } : prev
+    );
+
+    setUploading(false);
+  };
+
+  /* ===========================
+        SUBMIT UPDATE
+  ============================ */
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     await fetch(`/api/products/${id}`, {
@@ -48,81 +119,92 @@ export default function EditProduct() {
     router.push("/admin/products");
   };
 
+  /* ===========================
+            UI
+  ============================ */
   return (
     <div className="min-h-screen p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <h1 className="text-4xl font-extrabold text-white mb-8 drop-shadow-lg">
-        Edit Product
-      </h1>
+      <h1 className="text-4xl font-extrabold text-white mb-8">Edit Product</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/10 backdrop-blur-xl p-8 border border-white/20 rounded-2xl shadow-2xl max-w-xl space-y-6"
+        className="bg-white/10 backdrop-blur-xl p-8 border border-white/20 rounded-2xl shadow-xl max-w-4xl space-y-6"
       >
-        {/* Product Name */}
-        <Field
-          label="Product Name"
-          value={form.name}
-          onChange={(e: any) => setForm({ ...form, name: e.target.value })}
-        />
+        {/* 2 Column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Field
+            label="Product Name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
 
-        {/* Category */}
-        <Field
-          label="Category"
-          value={form.category}
-          onChange={(e: any) => setForm({ ...form, category: e.target.value })}
-        />
+          <Field
+            label="Category"
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
+          />
 
-        {/* Price */}
-        <Field
-          label="Price"
-          type="number"
-          value={form.price}
-          onChange={(e: any) => setForm({ ...form, price: e.target.value })}
-        />
+          <Field
+            label="Price"
+            type="number"
+            value={form.price}
+            onChange={(e) =>
+              setForm({ ...form, price: Number(e.target.value) })
+            }
+          />
 
-        {/* Stock */}
-        <Field
-          label="Stock"
-          type="number"
-          value={form.stock}
-          onChange={(e: any) => setForm({ ...form, stock: e.target.value })}
-        />
+          <Field
+            label="Stock"
+            type="number"
+            value={form.stock}
+            onChange={(e) =>
+              setForm({ ...form, stock: Number(e.target.value) })
+            }
+          />
 
-        {/* Description */}
-        <TextArea
-          label="Description"
-          value={form.description}
-          onChange={(e: any) =>
-            setForm({ ...form, description: e.target.value })
-          }
-        />
+          <TextArea
+            label="Description"
+            value={form.description}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
+          />
+
+          <TextArea
+            label="Advantages"
+            value={form.advantages}
+            onChange={(e) =>
+              setForm({ ...form, advantages: e.target.value })
+            }
+          />
+
+          <TextArea
+            label="Uses"
+            value={form.uses}
+            onChange={(e) => setForm({ ...form, uses: e.target.value })}
+          />
+        </div>
+
+        {/* IMAGE UPLOAD SECTION */}
+        <ImageUploadSection form={form} setForm={setForm} uploading={uploading} onUpload={handleImageUpload} />
 
         {/* TAGS */}
         <TagsSection
           form={form}
+          setForm={setForm}
           tagInput={tagInput}
           setTagInput={setTagInput}
-          setForm={setForm}
         />
 
         {/* FEATURES */}
         <FeaturesSection
           form={form}
+          setForm={setForm}
           featureInput={featureInput}
           setFeatureInput={setFeatureInput}
-          setForm={setForm}
         />
 
-        {/* IMAGES */}
-        <ImagesSection
-          form={form}
-          imageInput={imageInput}
-          setImageInput={setImageInput}
-          setForm={setForm}
-        />
-
-        {/* Submit Button */}
-        <button className="w-full bg-blue-600 hover:bg-blue-500 transition text-white font-semibold py-3 rounded-lg shadow-lg">
+        <button className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg shadow-lg">
           Update Product
         </button>
       </form>
@@ -130,49 +212,135 @@ export default function EditProduct() {
   );
 }
 
-/* =============== REUSABLE COMPONENTS =============== */
+/* =======================================================
+    REUSABLE COMPONENTS
+======================================================= */
 
-function Field({ label, value, onChange, type = "text" }: any) {
+function Field({
+  label,
+  value,
+  type = "text",
+  onChange,
+}: {
+  label: string;
+  value: string | number;
+  type?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
     <div>
       <Label text={label} />
       <input
         type={type}
         value={value}
-        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-300
-                   border border-white/30 rounded-lg focus:ring-2 
-                   focus:ring-blue-400 outline-none transition"
         onChange={onChange}
+        className="w-full mt-2 p-3 bg-white/20 text-white border border-white/30 rounded-lg"
       />
     </div>
   );
 }
 
-function TextArea({ label, value, onChange }: any) {
+function TextArea({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+}) {
   return (
     <div>
       <Label text={label} />
       <textarea
         value={value}
         rows={4}
-        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-300
-                   border border-white/30 rounded-lg focus:ring-2 
-                   focus:ring-blue-400 outline-none transition"
         onChange={onChange}
+        className="w-full mt-2 p-3 bg-white/20 text-white border border-white/30 rounded-lg"
       />
     </div>
   );
 }
 
-function Label({ text }: any) {
+const Label = ({ text }: { text: string }) => (
+  <label className="text-gray-200 text-sm font-medium">{text}</label>
+);
+
+/* =======================================================
+    IMAGE UPLOAD SECTION
+======================================================= */
+
+function ImageUploadSection({
+  form,
+  setForm,
+  uploading,
+  onUpload,
+}: {
+  form: ProductForm;
+  setForm: React.Dispatch<React.SetStateAction<ProductForm | null>>;
+  uploading: boolean;
+  onUpload: (e: ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
-    <label className="text-gray-200 text-sm font-medium">{text}</label>
+    <div>
+      <Label text="Images (Upload New)" />
+
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={onUpload}
+        className="w-full p-3 bg-white/20 text-white border border-white/30 rounded-lg mt-2"
+      />
+
+      {uploading && <p className="text-blue-300 mt-2">Uploading images...</p>}
+
+      {/* Preview Grid */}
+      <div className="flex flex-wrap gap-4 mt-4">
+        {form.images.map((img, index) => (
+          <div
+            key={index}
+            className="relative w-28 h-28 border border-white/20 rounded-lg overflow-hidden"
+          >
+            <img src={img} className="w-full h-full object-cover" />
+            <button
+              type="button"
+              className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-1 rounded"
+              onClick={() =>
+                setForm((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        images: prev.images.filter((_, i) => i !== index),
+                      }
+                    : prev
+                )
+              }
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
-/* =============== TAGS SECTION =============== */
+/* =======================================================
+    TAGS
+======================================================= */
 
-function TagsSection({ form, tagInput, setTagInput, setForm }: any) {
+function TagsSection({
+  form,
+  setForm,
+  tagInput,
+  setTagInput,
+}: {
+  form: ProductForm;
+  setForm: React.Dispatch<React.SetStateAction<ProductForm | null>>;
+  tagInput: string;
+  setTagInput: (v: string) => void;
+}) {
   return (
     <div>
       <Label text="Tags" />
@@ -181,40 +349,43 @@ function TagsSection({ form, tagInput, setTagInput, setForm }: any) {
         <input
           value={tagInput}
           placeholder="Add tag"
-          className="flex-1 p-3 bg-white/20 text-white placeholder-gray-300
-                     border border-white/30 rounded-lg focus:ring-2 
-                     focus:ring-blue-400 outline-none transition"
+          className="flex-1 p-3 bg-white/20 text-white border border-white/30 rounded-lg"
           onChange={(e) => setTagInput(e.target.value)}
         />
         <button
           type="button"
+          className="px-4 bg-blue-600 text-white rounded-lg"
           onClick={() => {
             if (!tagInput.trim()) return;
-            setForm({ ...form, tags: [...form.tags, tagInput] });
+            setForm((prev) =>
+              prev ? { ...prev, tags: [...prev.tags, tagInput.trim()] } : prev
+            );
             setTagInput("");
           }}
-          className="px-4 bg-blue-600 rounded-lg text-white hover:bg-blue-500"
         >
           Add
         </button>
       </div>
 
       <div className="flex flex-wrap gap-2 mt-3">
-        {form.tags.map((tag: any, index: number) => (
+        {form.tags.map((tag, index) => (
           <span
             key={index}
-            className="bg-blue-500/30 text-blue-200 py-1 px-3 rounded-full text-sm flex items-center gap-2 backdrop-blur"
+            className="bg-blue-500/30 text-blue-200 px-3 py-1 rounded-full flex gap-2"
           >
             {tag}
             <button
-              type="button"
+              className="text-red-300"
               onClick={() =>
-                setForm({
-                  ...form,
-                  tags: form.tags.filter((_: any, i: number) => i !== index),
-                })
+                setForm((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        tags: prev.tags.filter((_, i) => i !== index),
+                      }
+                    : prev
+                )
               }
-              className="text-red-300 hover:text-red-400"
             >
               ✕
             </button>
@@ -225,9 +396,21 @@ function TagsSection({ form, tagInput, setTagInput, setForm }: any) {
   );
 }
 
-/* =============== FEATURES SECTION =============== */
+/* =======================================================
+    FEATURES
+======================================================= */
 
-function FeaturesSection({ form, featureInput, setFeatureInput, setForm }: any) {
+function FeaturesSection({
+  form,
+  setForm,
+  featureInput,
+  setFeatureInput,
+}: {
+  form: ProductForm;
+  setForm: React.Dispatch<React.SetStateAction<ProductForm | null>>;
+  featureInput: string;
+  setFeatureInput: (v: string) => void;
+}) {
   return (
     <div>
       <Label text="Features" />
@@ -236,105 +419,50 @@ function FeaturesSection({ form, featureInput, setFeatureInput, setForm }: any) 
         <input
           value={featureInput}
           placeholder="Add a feature"
-          className="flex-1 p-3 bg-white/20 text-white placeholder-gray-300
-                     border border-white/30 rounded-lg focus:ring-2 
-                     focus:ring-blue-400 outline-none transition"
+          className="flex-1 p-3 bg-white/20 text-white border border-white/30 rounded-lg"
           onChange={(e) => setFeatureInput(e.target.value)}
         />
         <button
           type="button"
+          className="px-4 bg-blue-600 text-white rounded-lg"
           onClick={() => {
             if (!featureInput.trim()) return;
-            setForm({
-              ...form,
-              features: [...form.features, featureInput],
-            });
+
+            setForm((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    features: [...prev.features, featureInput.trim()],
+                  }
+                : prev
+            );
+
             setFeatureInput("");
           }}
-          className="px-4 bg-blue-600 rounded-lg text-white hover:bg-blue-500"
         >
           Add
         </button>
       </div>
 
       <ul className="mt-3 space-y-2">
-        {form.features.map((feat: any, index: number) => (
+        {form.features.map((feat, index) => (
           <li
             key={index}
-            className="bg-white/10 text-white p-3 rounded-lg flex justify-between items-center"
+            className="bg-white/10 text-white p-3 rounded-lg flex justify-between"
           >
             {feat}
             <button
-              type="button"
+              className="text-red-300"
               onClick={() =>
-                setForm({
-                  ...form,
-                  features: form.features.filter(
-                    (_: any, i: number) => i !== index
-                  ),
-                })
+                setForm((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        features: prev.features.filter((_, i) => i !== index),
+                      }
+                    : prev
+                )
               }
-              className="text-red-300 hover:text-red-400"
-            >
-              ✕
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/* =============== IMAGES SECTION =============== */
-
-function ImagesSection({ form, imageInput, setImageInput, setForm }: any) {
-  return (
-    <div>
-      <Label text="Image URLs" />
-
-      <div className="flex space-x-2 mt-2">
-        <input
-          value={imageInput}
-          placeholder="https://image-url.com"
-          className="flex-1 p-3 bg-white/20 text-white placeholder-gray-300
-                     border border-white/30 rounded-lg focus:ring-2 
-                     focus:ring-blue-400 outline-none transition"
-          onChange={(e) => setImageInput(e.target.value)}
-        />
-        <button
-          type="button"
-          onClick={() => {
-            if (!imageInput.trim()) return;
-            setForm({
-              ...form,
-              images: [...form.images, imageInput],
-            });
-            setImageInput("");
-          }}
-          className="px-4 bg-blue-600 rounded-lg text-white hover:bg-blue-500"
-        >
-          Add
-        </button>
-      </div>
-
-      <ul className="mt-3 space-y-2">
-        {form.images.map((img: any, index: number) => (
-          <li
-            key={index}
-            className="bg-white/10 text-white p-3 rounded-lg flex justify-between items-center"
-          >
-            <span className="truncate">{img}</span>
-            <button
-              type="button"
-              onClick={() =>
-                setForm({
-                  ...form,
-                  images: form.images.filter(
-                    (_: any, i: number) => i !== index
-                  ),
-                })
-              }
-              className="text-red-300 hover:text-red-400"
             >
               ✕
             </button>

@@ -2,21 +2,35 @@
 
 import { useState, useEffect } from "react";
 
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  advantages: string;
+  uses: string;
+  tags: string[];
+  features: string[];
+  images: string[];
+  stock: number;
+}
+
 export default function AdminProducts() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // 🔥 Debounce search
+  /* 🔥 Debounce search */
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(query), 400);
     return () => clearTimeout(timer);
   }, [query]);
 
-  // Fetch products (search + pagination)
+  /* 🔥 Fetch products (search + pagination) */
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await fetch(
@@ -60,7 +74,7 @@ export default function AdminProducts() {
         <p className="text-gray-400 text-lg mt-10">No products found...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((p: any) => (
+          {products.map((p) => (
             <div
               key={p._id}
               className="bg-white/10 border border-white/20 backdrop-blur-xl 
@@ -72,9 +86,39 @@ export default function AdminProducts() {
               {/* Category */}
               <p className="text-gray-300 text-sm mt-1">{p.category}</p>
 
+              {/* Short Info */}
+              <div className="mt-4 space-y-1 text-gray-300 text-sm">
+                <p>
+                  <span className="font-semibold text-gray-200">Stock:</span>{" "}
+                  {p.stock}
+                </p>
+
+                <p>
+                  <span className="font-semibold text-gray-200">
+                    Advantages:
+                  </span>{" "}
+                  {p.advantages ? p.advantages.slice(0, 40) : "N/A"}...
+                </p>
+
+                <p>
+                  <span className="font-semibold text-gray-200">Uses:</span>{" "}
+                  {p.uses ? p.uses.slice(0, 40) : "N/A"}...
+                </p>
+
+                <p>
+                  <span className="font-semibold text-gray-200">Features:</span>{" "}
+                  {p.features.length}
+                </p>
+
+                <p>
+                  <span className="font-semibold text-gray-200">Images:</span>{" "}
+                  {p.images.length}
+                </p>
+              </div>
+
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mt-3">
-                {p.tags?.slice(0, 4).map((tag: string, i: number) => (
+                {p.tags?.slice(0, 4).map((tag, i) => (
                   <span
                     key={i}
                     className="bg-blue-600/30 text-blue-200 px-3 py-1 rounded-full text-xs backdrop-blur"
@@ -131,13 +175,19 @@ export default function AdminProducts() {
 }
 
 /* DELETE BUTTON */
-function DeleteButton({ id, setProducts }: any) {
+function DeleteButton({
+  id,
+  setProducts,
+}: {
+  id: string;
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+}) {
   const deleteProduct = async () => {
     if (!confirm("Delete this product?")) return;
 
     await fetch(`/api/products/${id}`, { method: "DELETE" });
 
-    setProducts((prev: any[]) => prev.filter((p) => p._id !== id));
+    setProducts((prev) => prev.filter((p) => p._id !== id));
   };
 
   return (

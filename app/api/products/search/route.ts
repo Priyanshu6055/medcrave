@@ -18,6 +18,8 @@ export async function GET(req: Request) {
           { name: { $regex: q, $options: "i" } },
           { category: { $regex: q, $options: "i" } },
           { description: { $regex: q, $options: "i" } },
+          { advantages: { $regex: q, $options: "i" } },
+          { uses: { $regex: q, $options: "i" } },
           { tags: { $regex: q, $options: "i" } },
           { features: { $regex: q, $options: "i" } },
         ],

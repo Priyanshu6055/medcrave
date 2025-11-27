@@ -5,6 +5,15 @@
   --foreground: #171717;
 }
 
+* {
+  font-family: 'Poppins', sans-serif !important;
+  
+}
+
+a{
+  font-weight: bold;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -23,6 +23,8 @@ export async function POST(req: Request) {
     category: body.category || "",
     price: Number(body.price) || 0,
     description: body.description || "",
+    advantages: body.advantages || "",
+    uses: body.uses || "",
     tags: Array.isArray(body.tags) ? body.tags : [],
     features: Array.isArray(body.features) ? body.features : [],
     images: Array.isArray(body.images) ? body.images : [],

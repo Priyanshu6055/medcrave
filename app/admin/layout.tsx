@@ -1,3 +1,5 @@
+import LogoutButton from "@/components/LogoutButton";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex">
@@ -19,12 +21,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </a>
 
           <form action="/api/auth/logout" method="POST">
-            <button
-              type="submit"
-              className="mt-10 w-full bg-red-600 py-2 rounded hover:bg-red-700"
-            >
-              Logout
-            </button>
+              <LogoutButton/>
           </form>
         </nav>
       </aside>

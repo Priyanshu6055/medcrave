@@ -1,42 +1,69 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
-  const router = useRouter();
+  const [stats, setStats] = useState({
+    products: 0,
+  });
 
-  const logout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-  };
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) =>
+        setStats({
+          products: data?.products?.length || 0,
+        })
+      );
+  }, []);
 
   return (
-    <div className="p-10">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <button
-          onClick={logout}
-          className="bg-red-600 text-white px-4 py-2 rounded"
-        >
-          Logout
-        </button>
-      </div>
+    <div className="min-h-screen p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <h1 className="text-4xl font-extrabold mb-8 drop-shadow-lg">
+        Admin Dashboard
+      </h1>
 
-      <div className="mt-10 grid grid-cols-3 gap-5">
-        <a
-          href="/admin/products"
-          className="p-6 bg-black text-white rounded-xl shadow cursor-pointer"
-        >
-          Manage Products
-        </a>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+        <DashboardCard
+          title="Total Products"
+          value={stats.products}
+          link="/admin/products"
+        />
 
-        <a
-          href="/admin/products/add"
-          className="p-6 bg-gray-800 text-white rounded-xl shadow cursor-pointer"
-        >
-          Add Product
-        </a>
+        <DashboardCard
+          title="Add Product"
+          value="+"
+          link="/admin/products/add"
+        />
       </div>
     </div>
+  );
+}
+
+// Dashboard Card Component
+function DashboardCard({
+  title,
+  value,
+  link,
+}: {
+  title: string;
+  value: any;
+  link: string;
+}) {
+  return (
+    <a
+      href={link}
+      className="group bg-white/10 backdrop-blur-lg border border-white/20 
+                 rounded-2xl p-7 shadow-xl transition transform 
+                 hover:-translate-y-1 hover:shadow-2xl hover:bg-white/20"
+    >
+      <h2 className="text-xl font-semibold text-gray-200 group-hover:text-white">
+        {title}
+      </h2>
+
+      <p className="text-5xl mt-4 font-extrabold text-blue-400 group-hover:text-blue-300 transition">
+        {value}
+      </p>
+    </a>
   );
 }
