@@ -1,0 +1,243 @@
+/* =========================
+   CYAN / CRAYON THEME VARS
+   ========================= */
+:root {
+   --ebc-electric-border-color: #19d3ff; /* neon cyan for electric effect */
+  --ebc-electric-light-color: #6deaff;  /* soft bright cyan */
+  --ebc-gradient-color: rgba(25, 211, 255, 0.4);
+  --ebc-color-neutral-900: #0b0e13; /* rich dark */
+}
+
+/* Main wrapper */
+.ebc-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: transparent;
+}
+
+/* SVG */
+.ebc-svg {
+  position: absolute;
+}
+
+/* CARD CONTAINER */
+.ebc-card {
+  padding: 2px;
+  border-radius: 24px;
+  position: relative;
+  background: linear-gradient(
+      -30deg,
+      var(--ebc-gradient-color),
+      transparent,
+      var(--ebc-gradient-color)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--ebc-color-neutral-900),
+      var(--ebc-color-neutral-900)
+    );
+}
+
+/* INNER WRAPPER */
+.ebc-inner {
+  position: relative;
+}
+
+/* BORDER */
+.ebc-border-outer {
+  border: 2px solid rgba(25, 211, 255, 0.4);
+  border-radius: 24px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+
+.ebc-main-card {
+  width: 350px;
+  height: 500px;
+  border-radius: 24px;
+  border: 2px solid var(--ebc-electric-border-color);
+  margin-top: -4px;
+  margin-left: -4px;
+  filter: url(#turbulent-displace);
+}
+
+/* =========================
+   GLOW + ELECTRICITY EFFECTS
+   ========================= */
+
+/* Softer glow */
+.ebc-glow-1 {
+  border: 2px solid rgba(25, 211, 255, 0.4);
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  filter: blur(0.5px);
+  opacity: 0.4;
+}
+
+.ebc-glow-2 {
+  border: 2px solid var(--ebc-electric-light-color);
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  filter: blur(2px);
+  opacity: 0.6;
+}
+
+/* OVERLAYS */
+.ebc-overlay-1,
+.ebc-overlay-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  border-radius: 24px;
+  mix-blend-mode: overlay;
+  transform: scale(1.1);
+  filter: blur(12px);
+  background: linear-gradient(
+    -30deg,
+    white,
+    transparent 30%,
+    transparent 70%,
+    white
+  );
+}
+
+.ebc-overlay-1 {
+  opacity: 0.4;
+}
+
+.ebc-overlay-2 {
+  opacity: 0.2;
+}
+
+/* Background neon glow */
+.ebc-background-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  border-radius: 24px;
+  filter: blur(24px);
+  transform: scale(1.1);
+  opacity: 0.25;
+  z-index: -1;
+  background: linear-gradient(
+    -30deg,
+    var(--ebc-electric-light-color),
+    transparent,
+    var(--ebc-electric-border-color)
+  );
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.ebc-content {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ebc-content-top {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  padding-bottom: 16px;
+  height: 100%;
+}
+
+.ebc-content-bottom {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  padding-top: 16px;
+}
+
+/* Logo */
+.ebc-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 16px;
+  filter: drop-shadow(0px 0px 10px rgba(25, 211, 255, 0.4));
+}
+
+/* Scroll text tag */
+.ebc-glass {
+  background: radial-gradient(
+      47.2% 50% at 50.39% 88.37%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+  position: relative;
+  transition: background 0.3s ease;
+  border-radius: 14px;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ebc-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ebc-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.45) 16.73%,
+    rgba(255, 255, 255, 0.08) 30.2%,
+    rgba(255, 255, 255, 0.08) 68.2%,
+    rgba(255, 255, 255, 0.5) 81.89%
+  );
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* Typography */
+.ebc-title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: auto;
+  color: white;
+}
+
+.ebc-description {
+  opacity: 0.7;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Divider */
+.ebc-divider {
+  margin-top: auto;
+  border: none;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  mask-image: linear-gradient(to right, transparent, black, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black, transparent);
+}
