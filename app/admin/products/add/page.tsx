@@ -37,7 +37,9 @@ export default function AddProduct() {
   const [featureInput, setFeatureInput] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  /* ---------------- IMAGE UPLOAD HANDLER ---------------- */
+  /* ==================================================
+     IMAGE UPLOAD WITH REMOVE OPTION
+  ================================================== */
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -70,7 +72,9 @@ export default function AddProduct() {
     setUploading(false);
   };
 
-  /* ---------------- SUBMIT FORM ---------------- */
+  /* ==================================================
+     SUBMIT FORM
+  ================================================== */
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -138,7 +142,9 @@ export default function AddProduct() {
           />
         </div>
 
-        {/* ==== IMAGE UPLOAD ==== */}
+        {/* ==================================================
+            IMAGE UPLOAD + DELETE (DESELECT FEATURE)
+        ================================================== */}
         <Section label="Upload Images">
           <input
             type="file"
@@ -150,14 +156,28 @@ export default function AddProduct() {
 
           {uploading && <p className="text-blue-300 mt-2">Uploading...</p>}
 
-          {/* Preview */}
+          {/* Image Preview with DELETE BUTTON */}
           <div className="flex flex-wrap gap-4 mt-4">
             {form.images.map((img, i) => (
               <div
                 key={i}
-                className="w-28 h-28 bg-black/30 border border-white/20 rounded-lg overflow-hidden"
+                className="relative w-28 h-28 bg-black/30 border border-white/20 rounded-lg overflow-hidden"
               >
                 <img src={img} className="w-full h-full object-cover" />
+
+                {/* DELETE BUTTON */}
+                <button
+                  type="button"
+                  className="absolute top-1 right-1 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded"
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      images: form.images.filter((_, idx) => idx !== i),
+                    })
+                  }
+                >
+                  ✕
+                </button>
               </div>
             ))}
           </div>
@@ -218,9 +238,9 @@ export default function AddProduct() {
   );
 }
 
-/* ============================================
+/* ============================================================
    REUSABLE COMPONENTS — TYPE SAFE
-============================================ */
+============================================================ */
 
 interface FieldProps {
   label: string;
@@ -237,8 +257,7 @@ function Field({ label, placeholder, type = "text", onChange }: FieldProps) {
         type={type}
         placeholder={placeholder}
         onChange={onChange}
-        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-400
-                  border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
+        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-400 border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
       />
     </div>
   );
@@ -258,8 +277,7 @@ function TextArea({ label, placeholder, onChange }: TextAreaProps) {
         rows={4}
         placeholder={placeholder}
         onChange={onChange}
-        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-400
-                  border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
+        className="w-full mt-2 p-3 bg-white/20 text-white placeholder-gray-400 border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
       />
     </div>
   );
@@ -289,8 +307,7 @@ function InputAddList({
         value={value}
         placeholder="Type and add..."
         onChange={(e) => onChange(e.target.value)}
-        className="flex-1 p-3 bg-white/20 text-white placeholder-gray-400
-                  border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
+        className="flex-1 p-3 bg-white/20 text-white placeholder-gray-400 border border-white/30 rounded-lg focus:ring-2 focus:ring-blue-400"
       />
       <button
         type="button"
