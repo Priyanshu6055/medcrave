@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+
+/* CONTAINER */
+.blog-slider {
+  width: 95%;
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 25px;
+  height: 400px;
+  box-shadow: 0px 14px 80px rgba(10, 77, 104, 0.15); /* soft medical blue shadow */
+  position: relative;
+  transition: all 0.3s;
+}
+
+.blog-slider__item {
+  display: flex;
+  align-items: center;
+}
+
+.blog-slider__item.swiper-slide-active .blog-slider__img img {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.blog-slider__item.swiper-slide-active .blog-slider__content > * {
+  opacity: 1;
+  transform: none;
+  transition: all 0.4s;
+}
+
+/* -------------------------------------------------------------------
+   IMAGE WRAPPER — MEDICAL BLUE (NO GRADIENT)
+-------------------------------------------------------------------- */
+.blog-slider__img {
+  width: 300px;
+  height: 300px;
+  flex-shrink: 0;
+  background: #0A4D68; /* Solid medical blue */
+  border-radius: 20px;
+  overflow: hidden;
+  transform: translateX(-80px);
+  position: relative;
+  box-shadow: 4px 13px 30px rgba(10, 77, 104, 0.25);
+}
+
+/* Soften blue with transparent overlay */
+.blog-slider__img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 191, 219, 0.147); /* cyan tint overlay */
+  border-radius: 20px;
+}
+
+.blog-slider__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+/* -------------------------------------------------------------------
+   TEXT COLORS — CLEAN MEDICAL BLUE PALETTE
+-------------------------------------------------------------------- */
+.blog-slider__content {
+  padding-right: 25px;
+}
+
+.blog-slider__code {
+  color: #05BFDB; /* cyan highlight */
+  margin-bottom: 15px;
+  display: block;
+  font-weight: 500;
+}
+
+.blog-slider__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0A4D68; /* strong blue title */
+  margin-bottom: 20px;
+}
+
+.blog-slider__text {
+  color: #2E3A45; /* medical dark text */
+  margin-bottom: 30px;
+  line-height: 1.5em;
+}
+
+/* -------------------------------------------------------------------
+   BUTTON — PRIMARY BLUE (NO GRADIENT)
+-------------------------------------------------------------------- */
+.blog-slider__button {
+  display: inline-flex;
+  background: #0A4D68; /* solid medical blue */
+  padding: 15px 35px;
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 1px;
+  box-shadow: 0px 10px 30px rgba(10, 77, 104, 0.25);
+  transition: 0.3s;
+}
+
+.blog-slider__button:hover {
+  background: #083A50; /* darker hover */
+}
+
+/* -------------------------------------------------------------------
+   PAGINATION — BLUE & CYAN
+-------------------------------------------------------------------- */
+.blog-slider__pagination {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 11px !important;
+}
+
+.blog-slider__pagination .swiper-pagination-bullet {
+  width: 11px;
+  height: 11px;
+  margin: 8px 0;
+  border-radius: 10px;
+  background: #05BFDB; /* cyan bullet */
+  opacity: 0.3;
+  transition: all 0.3s;
+}
+
+.blog-slider__pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #0A4D68; /* primary blue */
+  height: 30px;
+  box-shadow: 0px 0px 15px rgba(10, 77, 104, 0.3);
+}
+
+/* -------------------------------------------------------------------
+   RESPONSIVE
+-------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .blog-slider {
+    margin: 180px auto;
+    height: auto;
+    min-height: 500px;
+  }
+
+  .blog-slider__item {
+    flex-direction: column;
+  }
+
+  .blog-slider__img {
+    width: 90%;
+    transform: translateY(-50%);
+  }
+
+  .blog-slider__pagination {
+    top: 205px;
+    left: 50% !important;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+
+  .blog-slider__pagination .swiper-pagination-bullet {
+    margin: 0 5px;
+  }
+
+  .blog-slider__pagination .swiper-pagination-bullet-active {
+    width: 30px;
+    height: 11px;
+  }
+}
+
+.blog-slider__item {
+  opacity: 0 !important;
+  transition: opacity 0.4s ease;
+}
+
+.blog-slider__item.swiper-slide-active {
+  opacity: 1 !important;
+}
+

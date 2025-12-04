@@ -4,13 +4,13 @@ import AboutPreview from "@/components/home/AboutPreview";
 import ServicesSection from "@/components/home/ServicesSection";
 import VisionSection from "@/components/home/VisionSection";
 import EventSection from "@/components/home/EventSection";
-import BoxSection from "@/components/home/BoxSection";
+import BlogSection from "@/components/home/BlogSection";
 
 export default function HomePage() {
   return (
     <>
       <HeroCarousel />
-      <BoxSection/>
+      <BlogSection/>
       {/* <DownloadSection /> */}
       <AboutPreview />
       <ServicesSection />

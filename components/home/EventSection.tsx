@@ -4,47 +4,26 @@ import { useRef, useEffect, useState } from "react";
 import EventCard from "@/components/ui/EventCard";
 import Button from "@/components/ui/Button";
 
-// Event Data
-const events = [
+const equipment = [
   {
-    image: "/event/36-think-tank.png",
-    title: "36 Think Tank: Business Plan Competition",
-    speaker: "",
-    date: "",
-    time: "",
-    fullDate: { day: "25", monthYear: "JAN 2025" },
+    image: "/home-equipment/fetal-monitor.png",
+    title: "Fetal Monitor",
+    category: "Gynecology",
   },
   {
-    image: "/event/3d-printing.png",
-    title: "3D Printers & Laser Cutter training",
-    speaker: "",
-    date: "",
-    time: "",
-    fullDate: { day: "05", monthYear: "FEB 2025" },
+    image: "/home-equipment/Gynae-Electric.png",
+    title: "CTG Machine",
+    category: "Gynecology",
   },
   {
-    image: "/event/AICTE-&-MIC-FDP.png",
-    title: "AICTE & MIC FDP on Innovation and Entrepreneurship",
-    speaker: "",
-    date: "",
-    time: "",
-    fullDate: { day: "18", monthYear: "MAR 2025" },
+    image: "/home-equipment/exam-chair.png",
+    title: "Gynecology Examination Chair",
+    category: "Gynecology",
   },
   {
-    image: "/event/understanding-intellectual.jpeg",
-    title: "Workshop: Understanding Intellectual Property Rights",
-    speaker: "",
-    date: "",
-    time: "",
-    fullDate: { day: "26", monthYear: "APR 2025" },
-  },
-  {
-    image: "/event/ideacon.jpeg",
-    title: "Ideacon 2025",
-    speaker: "",
-    date: "",
-    time: "",
-    fullDate: { day: "21", monthYear: "MAY 2025" },
+    image: "/home-equipment/Mucus-Extractor.png",
+    title: "Neonatal Baby Warmer",
+    category: "Gynecology",
   },
 ];
 
@@ -54,14 +33,12 @@ export default function EventSection() {
 
   let speed = 0;
   let current = 0;
-  let autoSpeed = 0.25; // Slightly slower for smaller UI
+  let autoSpeed = 0.25;
   let inside = false;
   let raf: number;
 
-  // Auto Infinite Scroll
   const animate = () => {
     if (!scrollRef.current || showAll) return;
-
     const el = scrollRef.current;
     const half = el.scrollWidth / 2;
 
@@ -117,10 +94,10 @@ export default function EventSection() {
         {/* Header */}
         <div className="text-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Events
+            Equipments
           </h2>
           <p className="text-gray-500 text-xs sm:text-sm mt-1">
-            Join our startup-focused events, workshops & sessions.
+            High-quality equipment designed for neonatal care.
           </p>
         </div>
 
@@ -134,33 +111,14 @@ export default function EventSection() {
               ref={scrollRef}
               onMouseEnter={enter}
               onMouseLeave={leave}
-              className="
-                flex gap-3 
-                overflow-x-hidden 
-                py-2 
-                cursor-pointer 
-                select-none 
-                [scrollbar-width:none] 
-                [-ms-overflow-style:none]
-              "
+              className="flex gap-3 overflow-x-hidden py-2 select-none"
             >
-              {[...events, ...events].map((event, i) => (
-                <div
-                  key={i}
-                  className="
-                    min-w-[150px] 
-                    sm:min-w-[170px] 
-                    md:min-w-[200px] 
-                    lg:min-w-[230px] 
-                  "
-                >
+              {[...equipment, ...equipment].map((item, i) => (
+                <div key={i} className="min-w-[230px]">
                   <EventCard
-                    image={event.image}
-                    title={event.title}
-                    speaker={event.speaker}
-                    date={event.date}
-                    time={event.time}
-                    fullDate={event.fullDate}
+                    image={item.image}
+                    title={item.title}
+                    category={item.category}
                   />
                 </div>
               ))}
@@ -171,25 +129,24 @@ export default function EventSection() {
         {/* View All Button */}
         {!showAll && (
           <div className="flex justify-center mt-5">
+            <a href="/products">
             <Button className="text-xs px-4 py-1.5" onClick={() => setShowAll(true)}>
               View All
             </Button>
+            </a>
           </div>
         )}
 
         {/* Grid View */}
         {showAll && (
           <>
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-              {events.map((event, i) => (
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {equipment.map((item, i) => (
                 <EventCard
                   key={i}
-                  image={event.image}
-                  title={event.title}
-                  speaker={event.speaker}
-                  date={event.date}
-                  time={event.time}
-                  fullDate={event.fullDate}
+                  image={item.image}
+                  title={item.title}
+                  category={item.category}
                 />
               ))}
             </div>

@@ -5,61 +5,59 @@ import SmoothScrollProvider from "./lenis";
 import LoadingLayoutWrapper from "@/components/layout/LoadingLayoutWrapper";
 
 export const metadata = {
-
-  title: "CVRU iTBi Foundation | Best Incubation Center in Bilaspur",
+  title: "Medcrave Biomedicals | Premium Herbal Extracts & Pharmaceutical Ingredients",
   description:
-    "CVRU i-TBI Foundation is Bilaspur’s leading Technology Business Incubator (TBI), empowering startups with incubation support, mentorship, funding access, legal guidance, events, modern workspaces, and entrepreneurship development programs in Chhattisgarh.",
+    "Medcrave Biomedicals is a trusted manufacturer of high-quality herbal extracts, nutraceutical ingredients, and pharmaceutical raw materials. We deliver purity, consistency, and globally compliant biomedical solutions for healthcare, wellness, and research industries.",
+
   keywords: [
-    "Best Incubation Center in Bilaspur",
-    "Bilaspur Startup Incubation",
-    "CVRU iTBi",
-    "Chhattisgarh Incubation Center",
-    "Startup Support Bilaspur",
-    "Entrepreneurship Development Bilaspur",
-    "Business Incubator Chhattisgarh",
-    "Innovation Hub Bilaspur",
-    "Startup Funding Support",
-    "Mentorship for Startups",
-    "TBI Bilaspur",
-    "Technology Business Incubator CG",
-    "CVRU Incubation Center",
-    "Startup Events Bilaspur",
-    "Incubation Programs Chhattisgarh"
+    "Medcrave Biomedicals",
+    "Herbal extracts manufacturer India",
+    "Nutraceutical ingredients supplier",
+    "Pharmaceutical raw materials",
+    "Ayurvedic extracts wholesale",
+    "Biomedical solutions India",
+    "Pharma-grade herbal extracts",
+    "Natural ingredients for nutraceuticals",
+    "GMP certified herbal manufacturer",
+    "Pharmaceutical API supplier",
+    "Medcrave products",
+    "Medicinal plant extracts",
+    "Herbal and botanical extracts company",
+    "Nutraceutical manufacturing India",
+    "Organic herbal extracts supplier",
   ],
 
-  // 🔥 Social & Search Engine Preview
   openGraph: {
-    title: "CVRU iTBi | Innovation & Startup Incubation Hub",
+    title: "Medcrave Biomedicals | Trusted Herbal & Pharmaceutical Ingredient Manufacturer",
     description:
-      "Discover an ecosystem that helps startups build, launch & scale. Access workspaces, training, mentors, funding & events.",
-    url: "https://www.cvruitbi.com/",
-    siteName: "CVRU iTBi Foundation",
+      "Medcrave provides premium herbal extracts, nutraceutical ingredients, and pharma-grade biomedical materials manufactured with the highest purity and industry standards.",
+    url: "https://www.medcravebiomedicals.com/",
+    siteName: "Medcrave Biomedicals",
     images: [
       {
-        url: "/cvru-logo.webp",
+        url: "/logos/medcrave-og.jpg",
         width: 1200,
         height: 630,
-        alt: "CVRU iTBi Foundation",
+        alt: "Medcrave Biomedicals — Herbal & Pharmaceutical Ingredients",
       },
     ],
     locale: "en_IN",
     type: "website",
   },
 
-  // 🔥 Twitter Card SEO
   twitter: {
     card: "summary_large_image",
-    title: "CVRU iTBi",
+    title: "Medcrave Biomedicals",
     description:
-      "Empowering startups through incubation, mentoring, funding & innovation programs.",
-    images: ["/cvru-logo.webp"],
+      "Premium herbal extracts & pharmaceutical ingredients manufactured with unmatched purity and consistency.",
+    images: ["/logos/medcrave-og.jpg"],
   },
 
-  // Canonical URL (Important for Google)
   alternates: {
-    canonical: "https://www.cvruitbi.com/",
+    canonical: "https://www.medcravebiomedicals.com/",
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -79,9 +77,9 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <Navbar />
 
-          <LoadingLayoutWrapper>
+          {/* <LoadingLayoutWrapper> */}
             <main className="flex-grow">{children}</main>
-          </LoadingLayoutWrapper>
+          {/* </LoadingLayoutWrapper> */}
 
           <Footer />
         </SmoothScrollProvider>

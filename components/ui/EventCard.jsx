@@ -5,81 +5,106 @@ import Image from "next/image";
 export default function EventCard({
   image,
   title,
-  speaker,
-  date,
-  time,
-  fullDate,
+  model,
+  category,
+  warranty,
 }) {
   return (
     <div
       className="
-      w-full 
-      max-w-[175px] sm:max-w-[190px] md:max-w-[210px]   /* 30% smaller */
-      rounded-md shadow sm:shadow-md border border-[#00000020]
-      overflow-hidden bg-white
-    "
+        w-full max-w-[240px]
+        h-[330px]                     /* 🌟 FIXED HEIGHT */
+        bg-white rounded-2xl
+        shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+        hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+        border border-[#E6F7FB]
+        transition-all duration-300
+        overflow-hidden
+        flex flex-col                /* Ensures content stays aligned */
+        group
+      "
     >
       {/* IMAGE SECTION */}
-      <div className="relative w-full h-28 xs:h-32 sm:h-36 md:h-40">
-        <Image src={image} alt={title} fill className="object-cover" />
+      <div className="relative w-full h-[150px] bg-white">  {/* FIXED HEIGHT */}
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="
+            object-contain            /* Better clarity for equipment */
+            p-2
+            transition-all duration-300 
+            group-hover:scale-[1.04]
+          "
+        />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-
-        {/* Speaker */}
-        {speaker && (
-          <div
-            className="
-              absolute bottom-1 right-1 
-              bg-white/90 px-1 py-[2px] rounded 
-              text-[7px] sm:text-[8px] font-semibold text-gray-800
-            "
-          >
-            {speaker}
-          </div>
-        )}
+        {/* Cyan badge */}
+        <div
+          className="
+            absolute top-2 right-2 
+            bg-[#05BFDB] text-white
+            text-[10px] font-semibold
+            px-2 py-[3px] rounded-full shadow
+          "
+        >
+          Premium
+        </div>
       </div>
 
       {/* CONTENT SECTION */}
-      <div className="p-1.5 h-[32px] sm:h-[36px] flex items-start">
-        <h2 className="text-[10px] sm:text-xs font-bold text-gray-900 leading-tight line-clamp-2">
-          {title}
-        </h2>
-      </div>
+      <div className="p-3 flex-1 flex flex-col justify-end">
+        <div className="space-y-2">
+          {/* TITLE */}
+          <h2 className="text-[15px] font-bold text-[#0A4D68] leading-snug line-clamp-2">
+            {title}
+          </h2>
 
-      {/* BOTTOM SECTION */}
-      <div className="flex">
-        {/* DATE BOX */}
-        <div
-          className="
-            text-white rounded-[2px] bg-[#ececec80] 
-            text-center font-bold 
-            text-[9px] sm:text-[10px] 
-            m-[3px]
-          "
-        >
-          <p className="text-[#ee9e26] text-lg sm:text-xl p-[4px] sm:p-[5px]">
-            {fullDate.day}
-          </p>
-
-          <div className="py-[3px] px-2 w-full bg-[#ee9e26]">
-            <p className="text-[6px] sm:text-[7px] whitespace-nowrap">
-              {fullDate.monthYear}
-            </p>
+          {/* DETAILS BOX */}
+          <div
+            className="
+              bg-[#F2FCFF]
+              border border-[#05BFDB]/30
+              rounded-xl p-3 
+              space-y-1.5
+              shadow-inner
+              text-[12px]
+            "
+          >
+            {model && (
+              <p className="text-[#0A4D68]/80">
+                <span className="font-semibold text-[#0A4D68]">Model:</span> {model}
+              </p>
+            )}
+            {category && (
+              <p className="text-[#0A4D68]/80">
+                <span className="font-semibold">Category:</span> {category}
+              </p>
+            )}
+            {warranty && (
+              <p className="text-[#0A4D68]/80">
+                <span className="font-semibold">Warranty:</span> {warranty}
+              </p>
+            )}
           </div>
         </div>
 
-        {/* RIGHT TITLE */}
-        <div
+        {/* CTA BUTTON */}
+        <a href="/products">
+        <button
           className="
-            flex items-center 
-            px-2 sm:px-3 py-[2px]
-            text-[8px] sm:text-[9px] font-semibold 
-            text-gray-700 leading-tight
+            w-full py-2 mt-3
+            text-[12px] font-semibold
+            rounded-lg
+            bg-[#0A4D68] text-white
+            shadow-[0_3px_12px_rgba(10,77,104,0.25)]
+            hover:bg-[#06354A]
+            hover:shadow-[0_4px_16px_rgba(10,77,104,0.35)]
+            transition-all duration-300
           "
         >
-          {title.toUpperCase()}
-        </div>
+          View Details
+        </button>
+        </a>
       </div>
     </div>
   );
