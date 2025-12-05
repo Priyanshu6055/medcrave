@@ -2,12 +2,7 @@
 
 import { useEffect } from "react";
 import Swiper from "swiper";
-import {
-  Pagination,
-  Mousewheel,
-  EffectFade,
-  Autoplay
-} from "swiper/modules";
+import { Pagination, Mousewheel, EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
@@ -34,10 +29,9 @@ export default function BlogSlider() {
 
   return (
     <>
-      <div className="container-global ">
+      <div className="">
         <div className="blog-slider">
           <div className="blog-slider__wrp swiper-wrapper">
-            
             {/* 1️⃣ Radiant Infant Warmer */}
             <div className="blog-slider__item swiper-slide">
               <div className="blog-slider__img">
@@ -49,10 +43,12 @@ export default function BlogSlider() {
               <div className="blog-slider__content">
                 <div className="blog-slider__title">Radiant Infant Warmer</div>
                 <div className="blog-slider__text">
-                  Provides controlled warmth for newborns, especially premature 
+                  Provides controlled warmth for newborns, especially premature
                   or low-birth-weight babies requiring thermal regulation.
                 </div>
-                <a href="/about" className="blog-slider__button">READ MORE</a>
+                <a href="/about" className="blog-slider__button">
+                  READ MORE
+                </a>
               </div>
             </div>
 
@@ -67,10 +63,12 @@ export default function BlogSlider() {
               <div className="blog-slider__content">
                 <div className="blog-slider__title">Phototherapy Unit</div>
                 <div className="blog-slider__text">
-                  Designed for the treatment of neonatal jaundice by using 
+                  Designed for the treatment of neonatal jaundice by using
                   high-intensity blue light to safely reduce bilirubin levels.
                 </div>
-                <a href="/about" className="blog-slider__button">READ MORE</a>
+                <a href="/about" className="blog-slider__button">
+                  READ MORE
+                </a>
               </div>
             </div>
 
@@ -85,13 +83,14 @@ export default function BlogSlider() {
               <div className="blog-slider__content">
                 <div className="blog-slider__title">Neonatal Ventilator</div>
                 <div className="blog-slider__text">
-                  Provides advanced respiratory support for newborns with 
+                  Provides advanced respiratory support for newborns with
                   breathing difficulties, apnea, or respiratory distress.
                 </div>
-                <a href="/about" className="blog-slider__button">READ MORE</a>
+                <a href="/about" className="blog-slider__button">
+                  READ MORE
+                </a>
               </div>
             </div>
-
           </div>
 
           <div className="blog-slider__pagination"></div>

@@ -1,115 +1,155 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay, Pagination } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
-import { motion, Variants } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// --- ANIMATION CONFIG ---
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
-  },
-};
+gsap.registerPlugin(ScrollTrigger);
 
-const textItemVariants: Variants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: "spring", stiffness: 100, damping: 15, duration: 0.6 },
-  },
-};
-
-const imageVariants: Variants = {
-  hidden: { scale: 1.05, opacity: 0.7 },
-  visible: {
-    scale: 1.0,
-    opacity: 1,
-    transition: { duration: 2.2, ease: "easeInOut" },
-  },
-};
+// --------------------------------------------
+// TYPE-SAFE SLIDE MODEL
+// --------------------------------------------
+interface SlideItem {
+  image: string;
+  titleWords: string[];
+  subtitle: string;
+}
 
 export default function HeroSlider() {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const slideRef = useRef<HTMLDivElement | null>(null);
 
-  const slides = [
+  const slides: SlideItem[] = [
     {
       image: "/slide/slide1.png",
-      titleWords: ["Innovate.", "Create.", "Grow with CVRU i-TBI Foundation."],
-      subtitle: "Join the Startup Ecosystem | Know More",
+      titleWords: [
+        "Medcrave.",
+        "Advancing Medical Intelligence.",
+        "Transforming Healthcare Technology.",
+      ],
+      subtitle: "Explore our next-gen diagnostic ecosystem →",
     },
     {
       image: "/slide/slide2.png",
-      titleWords: ["Empowering", "Visionary", "Entrepreneurs."],
-      subtitle: "Kickstart Your Journey Today",
+      titleWords: ["Precision Engineering.", "Clinical-grade Innovation."],
+      subtitle: "Discover advanced surgical equipment →",
     },
     {
       image: "/slide/slide3.png",
-      titleWords: ["Transform", "Ideas", "Into Reality."],
-      subtitle: "Connect | Collaborate | Build",
+      titleWords: [
+        "Real-Time Monitoring.",
+        "Intelligent Patient Care.",
+        "AI-Powered Healthcare.",
+      ],
+      subtitle: "See Medcrave monitoring solutions →",
     },
   ];
 
+  // ------------------------------------------------------
+  // GSAP FUTURISTIC ANIMATIONS
+  // ------------------------------------------------------
+  useEffect(() => {
+    if (!slideRef.current) return;
+
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out", duration: 1 },
+    });
+
+    // Futuristic glow + grid animation
+    tl.fromTo(
+      ".grid-overlay",
+      { opacity: 0, scale: 1.2 },
+      { opacity: 0.22, scale: 1, duration: 2 }
+    );
+
+    // Text animation
+    tl.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0 },
+      "-=1.4"
+    );
+
+    // Subtitle button
+    tl.fromTo(
+      ".subtitle-btn",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0 },
+      "-=1.2"
+    );
+  }, [activeSlideIndex]);
+
   return (
-    <div className="w-full h-[70vh] min-h-[320px] overflow-hidden relative group">
+    <div
+      ref={slideRef}
+      className="
+        relative w-full h-[75vh] min-h-[350px] overflow-hidden group
+      "
+    >
+      {/* Futuristic animated grid */}
+      <div
+        className="
+          grid-overlay absolute inset-0 z-[2] pointer-events-none
+          bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)]
+          bg-[size:80px_80px]
+        "
+      />
+
+      {/* Cyan glow orb */}
+      <div
+        className="
+          absolute inset-0 z-[1] pointer-events-none 
+          bg-[radial-gradient(circle_at_center,rgba(0,204,255,0.18),transparent_65%)]
+          animate-pulse
+        "
+      />
 
       <Swiper
-        modules={[Navigation, Autoplay, Pagination]}
-        navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
+        modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         pagination={{ clickable: true }}
+        navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
         loop
-        speed={900}
-        onSlideChangeTransitionStart={(s) => setActiveSlideIndex(s.realIndex)}
-        className="h-full w-full"
+        speed={1200}
+        onSlideChangeTransitionStart={(s: SwiperType) =>
+          setActiveSlideIndex(s.realIndex)
+        }
+        className="h-full w-full z-[3]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative w-full h-full">
 
-              {/* Background Image */}
+              {/* Background Image (kept exact) */}
               <motion.img
-                key={`img-${index}-${activeSlideIndex}`}
                 src={slide.image}
-                variants={imageVariants}
-                initial="hidden"
-                animate="visible"
-                className="w-full h-full object-cover absolute inset-0"
-                alt={`Slide ${index}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                initial={{ scale: 1.15, opacity: 0.75 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.8, ease: "easeOut" }}
+                alt="Medcrave slide"
               />
 
-              {/* Dark gradient for better readability */}
+              {/* Deep gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#001129]/70 via-[#00387b]/40 to-[#000814]/85 z-[4]" />
 
+              {/* Text container */}
+              <div className="absolute bottom-12 left-8 sm:left-14 z-[10] max-w-[80%] sm:max-w-[60%]">
 
-              {/* BOTTOM TEXT CONTAINER */}
-              <motion.div
-                key={`txt-${index}-${activeSlideIndex}`}
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="
-                  absolute inset-0 flex flex-col justify-end
-                  px-4 sm:px-10 pb-10 sm:pb-16
-                  max-w-[90%] sm:max-w-[70%] z-20
-                "
-              >
-                {/* ⭐ 50% SMALLER TITLE */}
-                <motion.h1
-                  variants={textItemVariants}
-                  className="
-                    text-xl xs:text-2xl sm:text-3xl md:text-4xl
-                    font-extrabold text-white leading-tight drop-shadow-2xl
-                  "
+                {/* Animated futuristic title */}
+                <h1
+                  ref={titleRef}
+                  className="text-white font-extrabold text-2xl sm:text-4xl md:text-5xl leading-tight"
                 >
                   {index === activeSlideIndex ? (
                     <Typewriter
@@ -117,50 +157,53 @@ export default function HeroSlider() {
                       loop={1}
                       cursor
                       cursorStyle="_"
-                      typeSpeed={60}
-                      deleteSpeed={35}
+                      typeSpeed={55}
+                      deleteSpeed={30}
                       delaySpeed={900}
                     />
                   ) : (
                     slide.titleWords.join(" ")
                   )}
-                </motion.h1>
+                </h1>
 
-                {/* ⭐ 50% SMALLER BUTTON */}
-                <motion.div variants={textItemVariants} className="mt-3">
-                  <button
-                    className="
-                      bg-[#00d2ef] text-white 
-                      px-3 py-1.5 xs:px-4 xs:py-2 sm:px-5 sm:py-2
-                      rounded-md font-medium text-[10px] xs:text-[12px] sm:text-sm
-                      shadow-xl hover:bg-[#2aa8b6] hover:scale-[1.03]
-                      transition duration-300
-                    "
-                  >
-                    {slide.subtitle}
-                  </button>
-                </motion.div>
-              </motion.div>
+                {/* Subtitle Button */}
+                <button
+                  className="
+                    subtitle-btn mt-6 px-6 py-2 
+                    bg-[#00c2f4] text-white rounded-md font-semibold
+                    shadow-lg hover:bg-[#2bd6ff] hover:scale-[1.04]
+                    transition-all duration-300
+                  "
+                >
+                  {slide.subtitle}
+                </button>
+              </div>
             </div>
           </SwiperSlide>
         ))}
 
-        {/* Navigation arrows */}
-        <div className="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
-          <div className="prev-btn pointer-events-auto bg-white/20 text-white p-2 sm:p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 hover:bg-white/40 transition">
-            <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+        {/* Navigation Buttons */}
+        <div className="absolute inset-0 flex items-center justify-between px-4 z-[20] pointer-events-none">
+          <div className="
+            prev-btn pointer-events-auto bg-white/15 text-white p-3 rounded-full 
+            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-white/30 
+            transition backdrop-blur-md
+          ">
+            ❮
           </div>
 
-          <div className="next-btn pointer-events-auto bg-white/20 text-white p-2 sm:p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 hover:bg-white/40 transition">
-            <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <div className="
+            next-btn pointer-events-auto bg-white/15 text-white p-3 rounded-full 
+            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-white/30 
+            transition backdrop-blur-md
+          ">
+            ❯
           </div>
         </div>
-
       </Swiper>
     </div>
   );
 }
+
+// Motion from Framer (type safe)
+import { motion } from "framer-motion";

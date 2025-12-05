@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import EventCard from "@/components/ui/EventCard";
+import EventCard from "@/components/ui/EquipmentCard";
 import Button from "@/components/ui/Button";
 
 const equipment = [
