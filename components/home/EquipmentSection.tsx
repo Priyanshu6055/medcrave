@@ -129,11 +129,9 @@ export default function EventSection() {
         {/* View All Button */}
         {!showAll && (
           <div className="flex justify-center mt-5">
-            <a href="/products">
             <Button className="text-xs px-4 py-1.5" onClick={() => setShowAll(true)}>
               View All
             </Button>
-            </a>
           </div>
         )}
 

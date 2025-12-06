@@ -101,7 +101,7 @@ export default function Navbar() {
           <Link href="/" className="relative flex items-center select-none">
             <div className="h-10 md:h-20 flex items-center">
               <motion.img
-                src="/logos/medcrave-logo.jpg"
+                src="/logos/medcrave-logo.jpgj"
                 alt="Medcrave Logo"
                 className="max-h-full w-auto object-contain"
                 animate={scrolled ? { scale: 0.92 } : { scale: 1 }}

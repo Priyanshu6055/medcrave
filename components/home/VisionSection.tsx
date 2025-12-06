@@ -7,7 +7,7 @@ import { Cpu, ShieldCheck, Activity, Layers } from "lucide-react";
 export default function FutureHologramShowcase() {
   return (
     <section className="relative py-28 sm:py-40 bg-white overflow-hidden text-[#0A1A44]">
-      
+
       {/* Blueprint Grid Background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,74,255,0.05),transparent_65%)]" />
       <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(to_right,#0A1A44_1px,transparent_1px),linear-gradient(to_bottom,#0A1A44_1px,transparent_1px)] 
@@ -26,7 +26,7 @@ export default function FutureHologramShowcase() {
             transition={{ duration: 0.7 }}
             className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight"
           >
-            The Future of  
+            The Future of
             <span className="text-blue-600"> Medical Engineering</span>
           </motion.h2>
 
@@ -36,7 +36,7 @@ export default function FutureHologramShowcase() {
             transition={{ duration: 0.75 }}
             className="mt-5 sm:mt-6 text-blue-900/70 text-base sm:text-lg"
           >
-            Experience next-gen AI-enhanced clinical equipment through an  
+            Experience next-gen AI-enhanced clinical equipment through an
             immersive holographic blueprint interface.
           </motion.p>
         </div>
@@ -48,16 +48,16 @@ export default function FutureHologramShowcase() {
           <motion.div
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] lg:w-[440px] lg:h-[440px]
+            className="relative w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] lg:w-[400px] lg:h-[400px]
                        rounded-full border border-blue-300/30
                        shadow-[0_0_120px_rgba(0,123,255,0.28)]
                        bg-white/10 backdrop-blur-2xl overflow-hidden"
           >
             <Image
-              src="/"
+              src="/images/circle-equipment.png"
               alt="Future Medical Device"
               fill
-              className="object-contain p-6 sm:p-10 opacity-95 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)]"
+              className="object-contain p-6 sm:p-10 opacity-95 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)] rounded-full"
             />
           </motion.div>
 
