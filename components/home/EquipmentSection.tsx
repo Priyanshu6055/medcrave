@@ -39,7 +39,7 @@ export default function EventSection() {
     inside: false,
   });
 
-  const rafRef = useRef<number>();
+const rafRef = useRef<number | null>(null);
 
   const animate = () => {
     if (!scrollRef.current) return;

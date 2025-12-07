@@ -3,15 +3,16 @@
 import React, { useEffect, useState } from "react";
 import BannerWrapper from "@/components/about/AboutBannerWrapper";
 
-export default function ProductDetails(props: any) {
-  // 1. Unwrap params (Next.js 13+ client component pattern)
+interface ProductDetailsProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function ProductDetails(props: ProductDetailsProps) {
   const params = React.use(props.params);
-  const id = params.id;
+  const id = params.id as string;
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  
-  // 2. State for Image Modal (Lightroom)
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // 3. Fetch Data (Client-side)

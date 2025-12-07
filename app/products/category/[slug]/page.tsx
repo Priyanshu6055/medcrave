@@ -1,11 +1,16 @@
 "use client";
-import React from "react";
-import { useEffect, useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import BannerWrapper from "@/components/about/AboutBannerWrapper";
 
-export default function CategoryProductsPage(props: any) {
+interface CategoryProductsPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default function CategoryProductsPage(props: CategoryProductsPageProps) {
   const params = React.use(props.params);
-  const slug = params.slug;
+  const slug = params.slug as string;
+
 
   const [products, setProducts] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
@@ -72,7 +77,6 @@ export default function CategoryProductsPage(props: any) {
             {/* ⭐ Styled Search Bar */}
             <div className="relative w-full max-w-lg group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                {/* Search Icon SVG */}
                 <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -106,18 +110,15 @@ export default function CategoryProductsPage(props: any) {
                 href={`/products/${product._id}`}
                 className="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
               >
-                {/* Product Image Wrapper */}
                 <div className="h-64 w-full overflow-hidden relative bg-slate-100">
                   <img
                     src={product.images?.[0]}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-in-out"
                   />
-                  {/* Overlay Gradient on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Product Info */}
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-2">
                     <span className="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-wide rounded-md">
@@ -138,7 +139,7 @@ export default function CategoryProductsPage(props: any) {
                       ₹{product.price.toLocaleString()}
                     </span>
                     <span className="text-sm font-medium text-indigo-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                      View Details &rarr;
+                      View Details →
                     </span>
                   </div>
                 </div>
