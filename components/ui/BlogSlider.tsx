@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "./blog-slider.css";
+import Button from "@/components/ui/Button";
 
 export default function BlogSlider() {
   useEffect(() => {
@@ -46,8 +47,8 @@ export default function BlogSlider() {
                   Provides controlled warmth for newborns, especially premature
                   or low-birth-weight babies requiring thermal regulation.
                 </div>
-                <a href="/about" className="blog-slider__button">
-                  READ MORE
+                <a href="/about">
+                  <Button className="rounded-xl">Explore More</Button>
                 </a>
               </div>
             </div>
@@ -66,8 +67,8 @@ export default function BlogSlider() {
                   Designed for the treatment of neonatal jaundice by using
                   high-intensity blue light to safely reduce bilirubin levels.
                 </div>
-                <a href="/about" className="blog-slider__button">
-                  READ MORE
+                <a href="/about">
+                  <Button className="rounded-xl">Explore More</Button>
                 </a>
               </div>
             </div>
@@ -86,8 +87,8 @@ export default function BlogSlider() {
                   Provides advanced respiratory support for newborns with
                   breathing difficulties, apnea, or respiratory distress.
                 </div>
-                <a href="/about" className="blog-slider__button">
-                  READ MORE
+                <a href="/about">
+                  <Button className="rounded-xl">Explore More</Button>
                 </a>
               </div>
             </div>

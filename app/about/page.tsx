@@ -13,28 +13,30 @@ export default function AboutPreview() {
         subtitle="Delivering Precision, Trust & Biomedical Innovation."
       />
 
-      <section className="py-10 bg-[#F5F9FA]">
-        <div className="container-global">
-          <div className="grid lg:grid-cols-2 gap-6 items-start bg-white rounded-xl p-5 md:p-6 shadow-lg border border-[#B8DCE8]">
+      {/* ⭐ Updated Section Background to a subtle Blue Tint */}
+      <section className="py-16 bg-slate-50">
+        <div className="container-global max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-10 items-stretch bg-white rounded-2xl p-6 md:p-10 shadow-xl border border-blue-50">
             
-            {/* LEFT SIDE */}
-            <div>
-              <div className="flex items-center gap-1 mb-1">
-                <span className="text-[#0A4D68] text-sm">✦</span>
-                <span className="text-sm font-semibold text-[#05BFDB] tracking-wide">
+            {/* LEFT SIDE: CONTENT */}
+            <div className="flex flex-col justify-center">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="h-1 w-6 bg-[#1A56DB] rounded-full"></span>
+                <span className="text-sm font-bold text-[#1A56DB] tracking-widest uppercase">
                   Medcrave Biomedicals
                 </span>
               </div>
 
-              <h2 className="text-xl md:text-2xl font-bold text-[#0A4D68] leading-snug mb-3">
-                About Us
+              {/* ⭐ ROYAL BLUE ACCENT HEADING */}
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-6">
+                Redefining <span className="text-[#1A56DB]">Biomedical</span> Excellence
               </h2>
 
-              <div className="space-y-2 text-[13px] text-gray-700 leading-relaxed">
+              <div className="space-y-4 text-slate-600 leading-relaxed text-sm md:text-base">
                 <p>
                   Medcrave Biomedicals specializes in high-quality biomedical
                   and diagnostic solutions designed for accuracy, reliability,
-                  and performance across medical environments.
+                  and performance across diverse medical environments.
                 </p>
 
                 <p>
@@ -43,48 +45,57 @@ export default function AboutPreview() {
                   diagnostics, and research-driven innovation.
                 </p>
 
-                <p>
-                  With a commitment to scientific excellence, we deliver
-                  precision-driven products that enhance clinical outcomes and
-                  support modern healthcare needs.
+                <p className="p-4 border-l-4 border-blue-100 bg-blue-50/50 rounded-r-xl italic">
+                  "With a commitment to scientific excellence, we deliver
+                  precision-driven products that enhance clinical outcomes."
                 </p>
               </div>
             </div>
 
-            {/* RIGHT SIDE */}
+            {/* RIGHT SIDE: VISUALS */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true }}
-              className="relative bg-blue-100 rounded-xl overflow-hidden shadow-md"
+              className="relative rounded-2xl overflow-hidden group shadow-2xl"
             >
-              {/* Top Text Overlay */}
-              <div className="absolute top-3 left-3 z-20">
-                <h3 className="text-white text-lg md:text-xl font-bold drop-shadow-md">
-                  Our Work.
+              {/* Floating Badge */}
+              <div className="absolute top-5 left-5 z-20 space-y-1">
+                <h3 className="text-white text-xl md:text-2xl font-bold drop-shadow-lg">
+                  Innovation.
                 </h3>
-                <h3 className="text-white text-lg md:text-xl font-bold drop-shadow-md opacity-80">
-                  Innovation. Precision.
+                <h3 className="text-blue-200 text-lg md:text-xl font-bold drop-shadow-md">
+                  Precision.
                 </h3>
               </div>
 
-              {/* IMAGE */}
-              <Image
-                src="/images/nitin-sir3.jpg"
-                alt="Medcrave Facility"
-                width={900}
-                height={400}
-                className="w-full h-[230px] md:h-[330px] object-cover rounded-xl"
-              />
+              {/* IMAGE WITH ZOOM ON HOVER */}
+              <div className="relative h-full min-h-[300px] md:min-h-[400px]">
+                <Image
+                  src="/images/nitin-sir3.jpg"
+                  alt="Medcrave Facility"
+                  fill
+                  className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-1000"
+                />
+                
+                {/* ⭐ Royal Blue Gradient Overlay (Solid to Transparent) */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#1A56DB]/60 via-transparent to-black/20 rounded-2xl"></div>
+              </div>
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40 rounded-xl"></div>
+              {/* PLAY BUTTON Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <button className="bg-white/90 backdrop-blur text-[#1A56DB] p-5 rounded-full shadow-2xl scale-75 group-hover:scale-100 transition-all">
+                  <Play fill="#1A56DB" size={24} />
+                </button>
+              </div>
 
-              {/* Button */}
-              <button className="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow hover:scale-110 transition">
-                <Play className="text-[#0A4D68]" size={16} />
-              </button>
+              {/* Action Button Label */}
+              <div className="absolute bottom-5 right-5 z-20">
+                <button className="px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold rounded-full">
+                   Watch Facility Tour
+                </button>
+              </div>
             </motion.div>
           </div>
         </div>

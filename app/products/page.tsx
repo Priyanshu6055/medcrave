@@ -6,23 +6,21 @@ import BannerWrapper from "@/components/about/AboutBannerWrapper";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
-  const [search, setSearch] = useState(""); // ⭐ Search input
+  const [search, setSearch] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
 
-  // ⭐ Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // products per page
+  const itemsPerPage = 6;
 
   useEffect(() => {
     fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
-        setFilteredProducts(data.products); // initially show all
+        setFilteredProducts(data.products);
       });
   }, []);
 
-  /* ⭐ REALTIME SEARCH */
   useEffect(() => {
     const results = products.filter((p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -30,10 +28,9 @@ export default function ProductsPage() {
     );
 
     setFilteredProducts(results);
-    setCurrentPage(1); // reset to page 1
+    setCurrentPage(1);
   }, [search, products]);
 
-  /* ⭐ PAGINATION CALCULATION */
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentItems = filteredProducts.slice(indexOfFirst, indexOfLast);
@@ -45,97 +42,104 @@ export default function ProductsPage() {
   };
 
   return (
-    <>
+    <div className="bg-slate-50 min-h-screen pb-20">
       <BannerWrapper
-        heading="Products"
-        subtitle="Meet the passionate innovators driving our mission forward."
+        heading="Our Catalog"
+        subtitle="Discover our complete range of innovative premium products."
       />
 
-      {/* MAIN PRODUCTS SECTION */}
-      <section className="relative w-full bg-white py-12 overflow-hidden">
-        <div className="container-global px-4 md:px-10 space-y-10">
+      <section className="relative w-full py-16 overflow-hidden">
+        <div className="container-global px-4 md:px-10 max-w-7xl mx-auto space-y-12">
+          
+          {/* ⭐ HEADER & SEARCH */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Explore <span className="text-indigo-600">Premium</span> Range
+              </h2>
+              <div className="flex items-center gap-2">
+                <div className="h-1 w-12 bg-indigo-600 rounded-full" />
+                <div className="h-2 w-2 bg-indigo-400 rounded-full animate-pulse" />
+              </div>
+            </div>
 
-          {/* Header */}
-          <div className="space-y-2">
-            <h2 className="text-xl md:text-3xl font-extrabold text-[#0b1220] leading-tight">
-              Explore Our Products
-            </h2>
-
-            <div className="flex items-center gap-1">
-              <div className="h-[2px] w-[40px] bg-green-600 rounded-full" />
-              <div className="h-2 w-2 bg-green-600 rounded-full scale-75" />
+            {/* ⭐ SEARCH BAR */}
+            <div className="relative w-full md:w-96 group">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search catalog..."
+                className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl 
+                           focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 outline-none 
+                           text-slate-700 shadow-sm transition-all"
+              />
             </div>
           </div>
 
-          {/* ⭐ SEARCH BAR */}
-          <div className="flex justify-start">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products by name or category..."
-              className="w-full md:w-1/2 px-4 py-3 border border-gray-300 rounded-xl 
-                         focus:outline-none focus:ring-2 focus:ring-green-600
-                         text-sm shadow-sm"
-            />
-          </div>
-
-          {/* Product Grid */}
+          {/* ⭐ PRODUCT GRID */}
           {currentItems.length === 0 ? (
-            <p className="text-gray-500 text-sm">No products found...</p>
+            <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300">
+              <p className="text-slate-500 font-medium">No products match your search criteria.</p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
               {currentItems.map((p) => (
                 <div
                   key={p._id}
-                  className="relative bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden 
-                  hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"
+                  className="group relative bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden 
+                             hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col"
                 >
-                  {/* Top Gradient Border */}
-                  <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-green-500 to-emerald-400"></div>
-
-                  {/* Image */}
-                  <div className="w-full h-48 bg-gray-100 overflow-hidden rounded-t-2xl">
+                  {/* Image Container */}
+                  <div className="w-full h-56 bg-slate-100 overflow-hidden relative">
                     {p.images?.length > 0 ? (
                       <img
                         src={p.images[0]}
                         alt={p.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
-                        No Image
+                      <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400 font-medium">
+                        No Preview Available
                       </div>
                     )}
+                    {/* Floating Price Tag */}
+                    <div className="absolute top-4 right-4 px-4 py-1.5 bg-white/90 backdrop-blur shadow-lg rounded-full">
+                      <p className="text-sm font-bold text-slate-900">₹{p.price}</p>
+                    </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-5 space-y-2">
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-green-700 transition">
+                  <div className="p-6 flex-grow space-y-3">
+                    <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-widest rounded-md">
+                      {p.category}
+                    </span>
+                    
+                    <h3 className="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                       {p.name}
                     </h3>
 
-                    <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
-                      {p.category}
-                    </span>
-
-                    <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+                    <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
                       {p.description}
-                    </p>
-
-                    <p className="text-lg font-bold text-green-700 mt-3">
-                      ₹{p.price}
                     </p>
                   </div>
 
-                  {/* View Details Button */}
-                  <div className="p-4">
+                  {/* Footer Button */}
+                  <div className="p-6 pt-0 mt-auto">
                     <Link
                       href={`/products/${p._id}`}
-                      className="block w-full text-center bg-green-600 hover:bg-green-700 
-                      text-white text-sm py-2.5 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+                      className="flex items-center justify-center gap-2 w-full bg-slate-900 hover:bg-indigo-600 
+                                 text-white text-sm font-bold py-3.5 rounded-2xl transition-all duration-300 shadow-lg shadow-slate-200"
                     >
                       View Details
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
                     </Link>
                   </div>
                 </div>
@@ -143,38 +147,39 @@ export default function ProductsPage() {
             </div>
           )}
 
-          {/* ⭐ PAGINATION UI */}
+          {/* ⭐ PAGINATION */}
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-3 mt-8">
-              {/* Prev */}
+            <div className="flex justify-center items-center gap-2 pt-10">
               <button
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 rounded-lg text-sm disabled:opacity-40"
+                className="px-5 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700
+                           hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
               >
-                Previous
+                Prev
               </button>
 
-              {/* Page Numbers */}
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goToPage(i + 1)}
-                  className={`px-3 py-2 rounded-lg text-sm ${
-                    currentPage === i + 1
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-100"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+              <div className="flex gap-1.5">
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goToPage(i + 1)}
+                    className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                      currentPage === i + 1
+                        ? "bg-slate-900 text-white shadow-lg scale-110"
+                        : "bg-white border border-slate-200 text-slate-500 hover:border-indigo-400"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
 
-              {/* Next */}
               <button
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 rounded-lg text-sm disabled:opacity-40"
+                className="px-5 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700
+                           hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
               >
                 Next
               </button>
@@ -182,6 +187,6 @@ export default function ProductsPage() {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 }

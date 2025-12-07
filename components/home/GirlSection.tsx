@@ -11,11 +11,12 @@ import {
   FaShieldAlt,
   FaStethoscope,
 } from "react-icons/fa";
+import Button from "@/components/ui/Button";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface NodeItem {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   label: string;
   x: string;
   y: string;
@@ -46,12 +47,12 @@ export default function NeuroVortexShowcaseTilt() {
         });
       }
 
-      /* 🌬 Float effect on icons */
+      /* 🌬 Float effect on nodes */
       nodesRef.current.forEach((node) => {
         gsap.to(node, {
-          x: gsap.utils.random(-10, 10),
-          y: gsap.utils.random(-10, 10),
-          duration: gsap.utils.random(2, 4),
+          x: gsap.utils.random(-12, 12),
+          y: gsap.utils.random(-12, 12),
+          duration: gsap.utils.random(2.5, 4.5),
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
@@ -77,44 +78,44 @@ export default function NeuroVortexShowcaseTilt() {
   }, []);
 
   return (
-    <section className="relative py-40 bg-white text-[#0A1A44] overflow-hidden">
+    <section className="relative py-40 bg-white text-slate-900 overflow-hidden">
 
-      {/* VORTEX BACKGROUND */}
+      {/* ⭐ VORTEX BG: Updated to Royal Blue Gradient */}
       <div
         ref={vortexRef}
         className="absolute inset-0 mx-auto w-[1300px] h-[1300px] rounded-full 
-        bg-[radial-gradient(circle,rgba(0,102,255,0.35),transparent_70%)] 
+        bg-[radial-gradient(circle,rgba(26,86,219,0.18),transparent_70%)] 
         blur-3xl opacity-60"
       />
 
-      {/* NEBULA OVERLAY */}
-      <div className="absolute inset-0 bg-[conic-gradient(from_180deg,rgba(0,75,255,0.08),transparent_60%)]
+      {/* ⭐ NEBULA OVERLAY: Subtle Royal Blue conic tint */}
+      <div className="absolute inset-0 bg-[conic-gradient(from_180deg,rgba(26,86,219,0.05),transparent_60%)]
       blur-3xl" />
 
       {/* HEADER */}
       <div className="relative z-20 text-center max-w-3xl mx-auto px-6">
         <h1
           ref={titleRef}
-          className="text-4xl sm:text-6xl font-extrabold leading-tight"
+          className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight"
         >
           Precision Reimagined
-          <span className="text-blue-600 block">Neuro-Vortex Medical Engine</span>
+          <span className="text-[#1A56DB] block">Neuro-Vortex Medical Engine</span>
         </h1>
 
-        <p className="mt-6 text-lg text-blue-900/70 max-w-xl mx-auto">
-          A cinematic demonstration of next-gen AI medical systems built for accuracy,
+        <p className="mt-6 text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
+          A cinematic demonstration of next-gen AI medical systems built for accuracy, 
           performance, and intelligent diagnostics.
         </p>
       </div>
 
       {/* DEVICE + ICONS */}
-      <div className="relative mt-24 flex justify-center">
+      <div className="relative mt-32 flex justify-center">
         <div
           className="relative w-[360px] sm:w-[460px] lg:w-[520px]
           h-[360px] sm:h-[460px] lg:h-[520px]"
         >
-          {/* AURORA GLOW */}
-          <div className="absolute inset-0 bg-blue-400/20 blur-3xl z-10" />
+          {/* ⭐ AURORA GLOW: Updated to softer Royal Blue blur */}
+          <div className="absolute inset-0 bg-[#1A56DB]/15 blur-3xl z-10" />
 
           {/* DEVICE IMAGE */}
           <div className="relative w-full h-full flex items-center justify-center">
@@ -123,7 +124,7 @@ export default function NeuroVortexShowcaseTilt() {
                 src="/images/girl-img.png"
                 alt="Medical Device"
                 fill
-                className="object-contain z-20 drop-shadow-[0_30px_55px_rgba(0,0,0,0.25)]"
+                className="object-contain z-20 drop-shadow-[0_40px_60px_rgba(26,86,219,0.15)]"
               />
             </div>
           </div>
@@ -144,19 +145,17 @@ export default function NeuroVortexShowcaseTilt() {
 
       {/* CTA */}
       <div className="mt-20 text-center">
-        <a
-          href="#"
-          className="px-14 py-4 text-lg font-bold rounded-xl bg-blue-600 text-white 
-          shadow-xl shadow-blue-400/40 hover:bg-blue-700 transition"
-        >
-          Explore the Neuro-Vortex →
-        </a>
+          <a href="/products">
+            <Button className="rounded-xl px-10 py-4 bg-[#1A56DB] text-white font-bold hover:bg-[#1E429F] shadow-xl shadow-blue-200 transition-all">
+                Explore Products
+            </Button>
+          </a>
       </div>
     </section>
   );
 }
 
-/* NODE COMPONENT (TYPE-SAFE) */
+/* NODE COMPONENT: Updated style to match Royal Blue UI */
 function Node({
   innerRef,
   icon,
@@ -165,7 +164,7 @@ function Node({
   y,
 }: {
   innerRef: (el: HTMLDivElement | null) => void;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   label: string;
   x: string;
   y: string;
@@ -176,11 +175,11 @@ function Node({
       className="absolute flex flex-col items-center text-center z-30"
       style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
     >
-      <div className="w-14 h-14 rounded-full bg-white/70 backdrop-blur-xl border border-blue-200 
-      shadow-lg flex items-center justify-center text-blue-700 text-xl">
+      <div className="w-14 h-14 rounded-2xl bg-white/80 backdrop-blur-xl border border-blue-100 
+      shadow-2xl shadow-blue-900/10 flex items-center justify-center text-[#1A56DB] text-xl">
         {icon}
       </div>
-      <p className="text-xs mt-2 font-semibold">{label}</p>
+      <p className="text-[10px] uppercase tracking-widest mt-3 font-extrabold text-slate-400">{label}</p>
     </div>
   );
 }

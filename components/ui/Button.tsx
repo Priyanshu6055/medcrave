@@ -292,7 +292,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         }
 
         .button:active {
-          transform: scale(0.95);
+          transform: scale(0.80);
         }
 
         .button--bubble {

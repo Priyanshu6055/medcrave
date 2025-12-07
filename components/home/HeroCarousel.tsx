@@ -6,6 +6,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 
 import type { Swiper as SwiperType } from "swiper";
 
@@ -15,9 +16,6 @@ import "swiper/css/pagination";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --------------------------------------------
-// TYPE-SAFE SLIDE MODEL
-// --------------------------------------------
 interface SlideItem {
   image: string;
   titleWords: string[];
@@ -32,32 +30,21 @@ export default function HeroSlider() {
   const slides: SlideItem[] = [
     {
       image: "/slide/slide1.png",
-      titleWords: [
-        "Medcrave.",
-        "Advancing Medical Intelligence.",
-        "Transforming Healthcare Technology.",
-      ],
+      titleWords: ["Medcrave."],
       subtitle: "Explore our next-gen diagnostic ecosystem →",
     },
     {
-      image: "/slide/slide2.png",
-      titleWords: ["Precision Engineering.", "Clinical-grade Innovation."],
+      image: "/slide/slide5.jpg",
+      titleWords: ["Precision Engineering."],
       subtitle: "Discover advanced surgical equipment →",
     },
     {
-      image: "/slide/slide3.png",
-      titleWords: [
-        "Real-Time Monitoring.",
-        "Intelligent Patient Care.",
-        "AI-Powered Healthcare.",
-      ],
+      image: "/slide/slide6.png",
+      titleWords: ["Real-Time Monitoring."],
       subtitle: "See Medcrave monitoring solutions →",
     },
   ];
 
-  // ------------------------------------------------------
-  // GSAP FUTURISTIC ANIMATIONS
-  // ------------------------------------------------------
   useEffect(() => {
     if (!slideRef.current) return;
 
@@ -65,14 +52,12 @@ export default function HeroSlider() {
       defaults: { ease: "power3.out", duration: 1 },
     });
 
-    // Futuristic glow + grid animation
     tl.fromTo(
       ".grid-overlay",
       { opacity: 0, scale: 1.2 },
-      { opacity: 0.22, scale: 1, duration: 2 }
+      { opacity: 0.15, scale: 1, duration: 2 }
     );
 
-    // Text animation
     tl.fromTo(
       titleRef.current,
       { opacity: 0, y: 30 },
@@ -80,7 +65,6 @@ export default function HeroSlider() {
       "-=1.4"
     );
 
-    // Subtitle button
     tl.fromTo(
       ".subtitle-btn",
       { opacity: 0, y: 20 },
@@ -92,24 +76,22 @@ export default function HeroSlider() {
   return (
     <div
       ref={slideRef}
-      className="
-        relative w-full h-[75vh] min-h-[350px] overflow-hidden group
-      "
+      className="relative w-full h-[75vh] min-h-[350px] overflow-hidden group bg-[#000814]"
     >
-      {/* Futuristic animated grid */}
+      {/* ⭐ Futuristic animated grid - Updated to Royal Blue Tints */}
       <div
         className="
           grid-overlay absolute inset-0 z-[2] pointer-events-none
-          bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px)]
+          bg-[linear-gradient(rgba(26,86,219,0.08)_1px,transparent_1px),linear-gradient(to_right,rgba(26,86,219,0.08)_1px,transparent_1px)]
           bg-[size:80px_80px]
         "
       />
 
-      {/* Cyan glow orb */}
+      {/* ⭐ Royal Blue glow orb replacement */}
       <div
         className="
           absolute inset-0 z-[1] pointer-events-none 
-          bg-[radial-gradient(circle_at_center,rgba(0,204,255,0.18),transparent_65%)]
+          bg-[radial-gradient(circle_at_center,rgba(26,86,219,0.18),transparent_65%)]
           animate-pulse
         "
       />
@@ -129,8 +111,6 @@ export default function HeroSlider() {
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative w-full h-full">
-
-              {/* Background Image (kept exact) */}
               <motion.img
                 src={slide.image}
                 className="absolute inset-0 w-full h-full object-cover"
@@ -140,13 +120,11 @@ export default function HeroSlider() {
                 alt="Medcrave slide"
               />
 
-              {/* Deep gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#001129]/70 via-[#00387b]/40 to-[#000814]/85 z-[4]" />
+              {/* ⭐ Deep Royal Blue Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#000814]/70 via-[#1A56DB]/20 to-[#000814]/85 z-[4]" />
 
               {/* Text container */}
               <div className="absolute bottom-12 left-8 sm:left-14 z-[10] max-w-[80%] sm:max-w-[60%]">
-
-                {/* Animated futuristic title */}
                 <h1
                   ref={titleRef}
                   className="text-white font-extrabold text-2xl sm:text-4xl md:text-5xl leading-tight"
@@ -157,6 +135,7 @@ export default function HeroSlider() {
                       loop={1}
                       cursor
                       cursorStyle="_"
+                      cursorColor="#1A56DB"
                       typeSpeed={55}
                       deleteSpeed={30}
                       delaySpeed={900}
@@ -166,12 +145,13 @@ export default function HeroSlider() {
                   )}
                 </h1>
 
-                {/* Subtitle Button */}
+                {/* ⭐ Royal Blue Subtitle Button */}
                 <button
                   className="
-                    subtitle-btn mt-6 px-6 py-2 
-                    bg-[#00c2f4] text-white rounded-md font-semibold
-                    shadow-lg hover:bg-[#2bd6ff] hover:scale-[1.04]
+                    subtitle-btn mt-6 px-8 py-3 
+                    bg-[#1A56DB] text-white rounded-xl font-bold
+                    shadow-[0_10px_20px_rgba(26,86,219,0.3)] 
+                    hover:bg-[#1E429F] hover:scale-[1.04]
                     transition-all duration-300
                   "
                 >
@@ -182,21 +162,25 @@ export default function HeroSlider() {
           </SwiperSlide>
         ))}
 
-        {/* Navigation Buttons */}
+        {/* Navigation Buttons - Royal Blue hover */}
         <div className="absolute inset-0 flex items-center justify-between px-4 z-[20] pointer-events-none">
-          <div className="
-            prev-btn pointer-events-auto bg-white/15 text-white p-3 rounded-full 
-            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-white/30 
-            transition backdrop-blur-md
-          ">
+          <div
+            className="
+            prev-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
+            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-[#1A56DB] 
+            transition backdrop-blur-md border border-white/20
+          "
+          >
             ❮
           </div>
 
-          <div className="
-            next-btn pointer-events-auto bg-white/15 text-white p-3 rounded-full 
-            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-white/30 
-            transition backdrop-blur-md
-          ">
+          <div
+            className="
+            next-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
+            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-[#1A56DB] 
+            transition backdrop-blur-md border border-white/20
+          "
+          >
             ❯
           </div>
         </div>
@@ -204,6 +188,3 @@ export default function HeroSlider() {
     </div>
   );
 }
-
-// Motion from Framer (type safe)
-import { motion } from "framer-motion";

@@ -3,21 +3,22 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Cpu, ShieldCheck, Activity, Layers } from "lucide-react";
+import Button from "@/components/ui/Button";
 
 export default function FutureHologramShowcase() {
   return (
     <section className="relative py-28 sm:py-40 bg-white overflow-hidden text-[#0A1A44]">
-
       {/* Blueprint Grid Background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,74,255,0.05),transparent_65%)]" />
-      <div className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(to_right,#0A1A44_1px,transparent_1px),linear-gradient(to_bottom,#0A1A44_1px,transparent_1px)] 
-                      bg-[size:40px_40px] sm:bg-[size:60px_60px]" />
+      <div
+        className="absolute inset-0 opacity-[0.12] bg-[linear-gradient(to_right,#0A1A44_1px,transparent_1px),linear-gradient(to_bottom,#0A1A44_1px,transparent_1px)] 
+                      bg-[size:40px_40px] sm:bg-[size:60px_60px]"
+      />
 
       {/* Glow Effects */}
       <div className="absolute w-[800px] sm:w-[1000px] h-[800px] sm:h-[1000px] bg-blue-300/20 blur-[200px] -top-40 left-1/2 -translate-x-1/2" />
 
       <div className="container-global relative z-10 px-5">
-
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
           <motion.h2
@@ -43,7 +44,6 @@ export default function FutureHologramShowcase() {
 
         {/* HOLOGRAM SHOWCASE */}
         <div className="relative mt-20 sm:mt-28 flex justify-center">
-
           {/* Rotating Hologram */}
           <motion.div
             animate={{ rotate: [0, 5, -5, 0] }}
@@ -114,12 +114,8 @@ export default function FutureHologramShowcase() {
           transition={{ duration: 0.6 }}
           className="text-center mt-20 sm:mt-28"
         >
-          <a
-            href="#"
-            className="px-10 sm:px-14 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-xl
-                       bg-blue-600 text-white shadow-xl shadow-blue-400/40 hover:bg-blue-700 transition"
-          >
-            Explore More
+          <a href="/products">
+            <Button className="rounded-xl">Explore More</Button>
           </a>
         </motion.div>
       </div>

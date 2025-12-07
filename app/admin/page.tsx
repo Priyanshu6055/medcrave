@@ -18,7 +18,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div className="min-h-screen p-10 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <h1 className="text-4xl font-extrabold mb-8 drop-shadow-lg">
         Admin Dashboard
       </h1>

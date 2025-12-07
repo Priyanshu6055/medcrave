@@ -7,8 +7,10 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, LayoutGrid } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Button from "@/components/ui/Button";
 
 interface NavLink {
   name: string;
@@ -17,23 +19,26 @@ interface NavLink {
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-
   const [categories, setCategories] = useState<string[]>([]);
+
+  // ⭐ ROYAL BLUE THEME COLORS
+  const royalBlue = "#1A56DB"; 
+  const darkRoyal = "#1E429F";
 
   const { scrollYProgress } = useScroll();
   const shadowOpacity = useTransform(scrollYProgress, [0, 1], [0, 0.25]);
-
-  // 🌊 Navy Glow Shadow
   const boxShadow = useTransform(
     shadowOpacity,
-    (v) => `0 6px 18px rgba(10, 77, 104, ${v})`
+    (v) => `0 6px 18px rgba(26, 86, 219, ${v})`
   );
 
-  /* Fetch categories */
   useEffect(() => {
     fetch("/api/categories")
       .then((res) => res.json())
@@ -48,11 +53,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Navigation Links */
   const links: NavLink[] = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-
     {
       name: "Products",
       subLinks: [
@@ -63,12 +66,6 @@ export default function Navbar() {
         })),
       ],
     },
-
-    {
-      name: "Facility",
-      subLinks: [{ name: "Facilities", href: "/facility" }],
-    },
-
     { name: "Contact Us", href: "/contact" },
   ];
 
@@ -78,7 +75,7 @@ export default function Navbar() {
   };
 
   const handleMouseLeave = () => {
-    const timeout = setTimeout(() => setOpenDropdown(null), 180);
+    const timeout = setTimeout(() => setOpenDropdown(null), 200);
     setHoverTimeout(timeout);
   };
 
@@ -88,151 +85,152 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       style={{ boxShadow }}
-      className={`fixed top-3 left-0 w-full z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 mt-2 ${
         scrolled
-          ? "backdrop-blur-xl bg-white border-b border-[#0A4D68]/40 py-1.5 md:py-1"
-          : "backdrop-blur-lg bg-white border-b border-[#0A4D68]/20 py-3 md:py-2"
+          ? "bg-white/95 backdrop-blur-md border-b border-slate-200 py-2 shadow-sm"
+          : "bg-white border-b border-transparent py-4"
       }`}
     >
-      <div className="container-global px-4 flex justify-between items-center">
-        
+      <div className="container-global px-6 flex justify-between items-center max-w-7xl mx-auto">
         {/* LOGO */}
-        <motion.div whileHover={{ scale: 1.05 }}>
-          <Link href="/" className="relative flex items-center select-none">
-            <div className="h-10 md:h-20 flex items-center">
-              <motion.img
-                src="/logos/medcrave-logo.jpgj"
-                alt="Medcrave Logo"
-                className="max-h-full w-auto object-contain"
-                animate={scrolled ? { scale: 0.92 } : { scale: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-          </Link>
-        </motion.div>
+        <Link href="/" className="relative flex items-center group">
+          <div className="h-10 md:h-14 overflow-hidden rounded-lg">
+            <motion.img
+              src="/logos/medcrave-logo.jpg"
+              alt="Medcrave Logo"
+              className="h-full w-auto object-contain"
+              animate={scrolled ? { scale: 0.95 } : { scale: 1 }}
+            />
+          </div>
+        </Link>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="hidden md:flex items-center space-x-8 text-[0.8rem] font-normal text-gray-900">
+        <nav className="hidden md:flex items-center space-x-1 font-medium">
           {links.map((link) =>
             link.subLinks ? (
               <div
                 key={link.name}
-                className="relative"
+                className="relative px-2"
                 onMouseEnter={() => handleMouseEnter(link.name)}
                 onMouseLeave={handleMouseLeave}
               >
-                <motion.button
-                  whileHover={{ color: "#05BFDB" }}
-                  className="flex items-center gap-1 text-[0.8rem]"
+                <button
+                  className={`flex items-center gap-1.5 py-2 px-4 rounded-full transition-colors text-sm hover:bg-slate-50 ${
+                    openDropdown === link.name ? "text-[#1A56DB]" : "text-slate-700"
+                  }`}
                 >
                   {link.name}
-                  <motion.div
-                    animate={{
-                      rotate: openDropdown === link.name ? 180 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ChevronDown size={12} />
-                  </motion.div>
-                </motion.button>
+                  <ChevronDown size={14} className={`transition-transform duration-300 ${openDropdown === link.name ? "rotate-180" : ""}`} />
+                </button>
 
-                {/* DROPDOWN MENU */}
                 <AnimatePresence>
                   {openDropdown === link.name && (
-                    <motion.ul
-                      key={link.name}
-                      initial={{ opacity: 0, y: -10, scale: 0.96 }}
+                    <motion.div
+                      initial={{ opacity: 0, y: 15, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                      transition={{ duration: 0.25 }}
-                      className="absolute left-0 mt-2 w-56 bg-white rounded-xl border border-gray-200 
-                                 p-2 shadow-lg max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300"
+                      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                      className="absolute left-1/2 -translate-x-1/2 mt-3 w-[650px] bg-white rounded-3xl border border-slate-200 p-6 shadow-2xl"
                     >
-                      {link.subLinks.map((sub) => (
-                        <motion.li key={sub.name} whileHover={{ x: 6 }}>
-                          <Link
-                            href={sub.href}
-                            className="block px-3 py-2 text-[0.75rem] text-gray-700 
-                                       hover:bg-[#05BFDB]/20 hover:text-[#0A4D68] rounded-lg transition-all"
-                          >
-                            {sub.name}
-                          </Link>
-                        </motion.li>
-                      ))}
-                    </motion.ul>
+                      <div className="mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
+                        <LayoutGrid size={16} className="text-[#1A56DB]" />
+                        <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Our Collections</span>
+                      </div>
+                      
+                      <ul className="grid grid-cols-4 gap-x-2 gap-y-1 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                        {link.subLinks.map((sub, idx) => (
+                          <motion.li key={sub.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: idx * 0.01 }}>
+                            <Link
+                              href={sub.href}
+                              className="block p-2 text-[11px] text-slate-600 hover:bg-blue-50 hover:text-[#1A56DB] rounded-lg transition-all truncate"
+                            >
+                              {sub.name}
+                            </Link>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             ) : (
-              <motion.div key={link.name} whileHover={{ color: "#05BFDB" }}>
-                <Link href={link.href!} className="relative text-[0.8rem]">
+              <div key={link.name} className="px-2">
+                <Link
+                  href={link.href!}
+                  className={`text-sm py-2 px-4 transition-colors ${pathname === link.href ? "text-[#1A56DB]" : "text-slate-700 hover:text-[#1A56DB]"}`}
+                >
                   {link.name}
-                  <motion.span
-                    className="absolute left-0 bottom-[-3px] h-[2px] bg-[#05BFDB] rounded-full"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
                 </Link>
-              </motion.div>
+              </div>
             )
           )}
         </nav>
 
-        {/* MOBILE MENU ICON */}
-        <motion.button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-gray-700"
-          whileTap={{ scale: 0.9 }}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </motion.button>
+        {/* ⭐ ROYAL BLUE INQUIRY BUTTON (Rounded XL) */}
+        <div className="hidden md:flex items-center ml-4">
+          <Link href="/contact">
+            <Button className="bg-[#1A56DB] hover:bg-[#1E429F] text-white py-2 px-6 rounded-xl transition-all shadow-lg shadow-blue-200">
+              Inquiry
+            </Button>
+          </Link>
+        </div>
+
+        {/* MOBILE TOGGLE */}
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2 text-[#1A56DB]">
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden bg-white/95 backdrop-blur-xl px-6 py-5 space-y-4 border-t border-[#0A4D68]/20"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-slate-100 px-6 py-6 space-y-4 shadow-xl"
           >
             {links.map((link) => (
               <div key={link.name}>
                 {link.subLinks ? (
-                  <details>
-                    <summary className="font-semibold text-[0.85rem] text-gray-800 py-1 cursor-pointer flex justify-between">
-                      {link.name}
-                    </summary>
-
-                    <ul className="pl-3 space-y-1 max-h-60 overflow-y-auto">
+                  <div className="space-y-2">
+                    <p className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <span className="w-1 h-3 bg-[#1A56DB] rounded-full"></span>
+                        {link.name}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 pl-4">
                       {link.subLinks.map((sub) => (
-                        <li key={sub.name}>
-                          <Link
-                            href={sub.href}
-                            className="block text-gray-600 py-1 text-[0.75rem] hover:text-[#05BFDB]"
-                          >
-                            {sub.name}
-                          </Link>
-                        </li>
+                        <Link key={sub.name} href={sub.href} onClick={() => setMobileOpen(false)} className="py-1 text-xs text-slate-500 active:text-[#1A56DB]">
+                          {sub.name}
+                        </Link>
                       ))}
-                    </ul>
-                  </details>
+                    </div>
+                  </div>
                 ) : (
-                  <Link
-                    href={link.href!}
-                    className="block font-semibold text-gray-800 text-[0.85rem] hover:text-[#05BFDB]"
-                  >
+                  <Link href={link.href!} onClick={() => setMobileOpen(false)} className="block font-bold text-slate-900 text-sm active:text-[#1A56DB]">
                     {link.name}
                   </Link>
                 )}
               </div>
             ))}
+            
+            {/* Mobile Smaller Centered Inquiry Button */}
+            <div className="">
+                <Link href="/contact">
+                    <Button className="rounded-xl">
+                        Inquiry
+                    </Button>
+                </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #1A56DB; }
+      `}</style>
     </motion.header>
   );
 }
