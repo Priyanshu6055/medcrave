@@ -73,7 +73,7 @@ export default function AboutPreview() {
               {/* IMAGE WITH ZOOM ON HOVER */}
               <div className="relative h-full min-h-[300px] md:min-h-[400px]">
                 <Image
-                  src="/images/nitin-sir3.jpg"
+                  src="/slide/bg-img.png"
                   alt="Medcrave Facility"
                   fill
                   className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-1000"

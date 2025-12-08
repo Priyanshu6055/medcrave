@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Cpu, ShieldCheck, Activity, Layers } from "lucide-react";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function FutureHologramShowcase() {
   return (
@@ -20,104 +21,98 @@ export default function FutureHologramShowcase() {
 
       <div className="container-global relative z-10 px-5">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight"
-          >
-            The Future of
-            <span className="text-blue-600"> Medical Engineering</span>
-          </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75 }}
-            className="mt-5 sm:mt-6 text-blue-900/70 text-base sm:text-lg"
-          >
-            Experience next-gen AI-enhanced clinical equipment through an
-            immersive holographic blueprint interface.
-          </motion.p>
-        </div>
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-12 lg:gap-20">
+          <div className="text-center max-w-3xl mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight"
+            >
+              The Future of
+              <span className="text-blue-600"> Medical Engineering</span>
+            </motion.h2>
 
-        {/* HOLOGRAM SHOWCASE */}
-        <div className="relative mt-20 sm:mt-28 flex justify-center">
-          {/* Rotating Hologram */}
-          <motion.div
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] lg:w-[400px] lg:h-[400px]
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75 }}
+              className="mt-5 sm:mt-6 text-blue-900/70 text-base sm:text-lg"
+            >
+              Experience next-gen AI-enhanced clinical equipment through an
+              immersive holographic blueprint interface.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mt-20 sm:mt-15"
+            >
+              <Link href="/products">
+                <Button className="rounded-xl">Explore More</Button>
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* HOLOGRAM SHOWCASE */}
+          <div className="relative flex justify-center">
+            {/* Rotating Hologram */}
+            <motion.div
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] lg:w-[400px] lg:h-[400px]
                        rounded-full border border-blue-300/30
                        shadow-[0_0_120px_rgba(0,123,255,0.28)]
                        bg-white/10 backdrop-blur-2xl overflow-hidden"
-          >
-            <Image
-              src="/images/circle-equipment.png"
-              alt="Future Medical Device"
-              fill
-              className="object-contain p-6 sm:p-10 opacity-95 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)] rounded-full"
+            >
+              <Image
+                src="/images/circle-equipment.png"
+                alt="Future Medical Device"
+                fill
+                className="object-contain p-6 sm:p-10 opacity-95 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)] rounded-full"
+              />
+            </motion.div>
+
+            {/* Floating Labels – MOBILE OPTIMIZED */}
+            <FloatingLabel
+              icon={<Cpu size={18} />}
+              text="AI Diagnostics Core"
+              x="-160px"
+              y="-40px"
+              smX="-260px"
+              smY="-50px"
             />
-          </motion.div>
 
-          {/* Vertical Scan Line */}
-          <motion.div
-            animate={{ y: ["0%", "100%"] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 left-1/2 w-[1.5px] sm:w-[2px] h-full bg-gradient-to-b 
-                       from-transparent via-blue-400/70 to-transparent"
-          />
+            <FloatingLabel
+              icon={<ShieldCheck size={18} />}
+              text="FDA Certified Safety"
+              x="160px"
+              y="20px"
+              smX="260px"
+              smY="20px"
+            />
 
-          {/* Floating Labels – MOBILE OPTIMIZED */}
-          <FloatingLabel
-            icon={<Cpu size={18} />}
-            text="AI Diagnostics Core"
-            x="-160px"
-            y="-40px"
-            smX="-260px"
-            smY="-50px"
-          />
+            <FloatingLabel
+              icon={<Activity size={18} />}
+              text="Realtime Vital Engine"
+              x="-150px"
+              y="140px"
+              smX="-240px"
+              smY="160px"
+            />
 
-          <FloatingLabel
-            icon={<ShieldCheck size={18} />}
-            text="FDA Certified Safety"
-            x="160px"
-            y="20px"
-            smX="260px"
-            smY="20px"
-          />
-
-          <FloatingLabel
-            icon={<Activity size={18} />}
-            text="Realtime Vital Engine"
-            x="-150px"
-            y="140px"
-            smX="-240px"
-            smY="160px"
-          />
-
-          <FloatingLabel
-            icon={<Layers size={18} />}
-            text="Precision Sensor Layers"
-            x="150px"
-            y="-120px"
-            smX="240px"
-            smY="-150px"
-          />
+            <FloatingLabel
+              icon={<Layers size={18} />}
+              text="Precision Sensor Layers"
+              x="150px"
+              y="-120px"
+              smX="240px"
+              smY="-150px"
+            />
+          </div>
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mt-20 sm:mt-28"
-        >
-          <a href="/products">
-            <Button className="rounded-xl">Explore More</Button>
-          </a>
-        </motion.div>
       </div>
     </section>
   );

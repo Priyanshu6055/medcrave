@@ -51,7 +51,7 @@ export default function Footer() {
 
       <motion.div
         style={{ x: sx, y: sy }}
-        className="pointer-events-none absolute w-24 h-24 border border-[#C8A55B]/50 rounded-[26px] opacity-50"
+        className="pointer-events-none absolute w-24 h-24 border border-[#102030]/30 rounded-[26px] opacity-70"
       />
  
       <div className="pointer-events-none absolute inset-0 opacity-[0.55]">

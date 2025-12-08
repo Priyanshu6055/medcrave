@@ -12,6 +12,7 @@ import {
   FaStethoscope,
 } from "react-icons/fa";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,11 +146,9 @@ export default function NeuroVortexShowcaseTilt() {
 
       {/* CTA */}
       <div className="mt-20 text-center">
-          <a href="/products">
-            <Button className="rounded-xl px-10 py-4 bg-[#1A56DB] text-white font-bold hover:bg-[#1E429F] shadow-xl shadow-blue-200 transition-all">
-                Explore Products
-            </Button>
-          </a>
+                <Link href="/products">
+                  <Button className="rounded-xl">Explore More</Button>
+                </Link>
       </div>
     </section>
   );

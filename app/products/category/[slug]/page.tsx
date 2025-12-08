@@ -11,7 +11,6 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
   const params = React.use(props.params);
   const slug = params.slug as string;
 
-
   const [products, setProducts] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -64,21 +63,32 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
 
       <section className="py-20">
         <div className="container-global px-4 md:px-8 max-w-7xl mx-auto">
-          
           {/* ⭐ Header & Search Section */}
           <div className="flex flex-col items-center mb-16 text-center">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
-              Collection: <span className="text-indigo-600 capitalize">{slug}</span>
+              Collection:{" "}
+              <span className="text-indigo-600 capitalize">{slug}</span>
             </h2>
             <p className="text-slate-500 mb-8 max-w-lg">
-              Browse our exclusive selection of {slug}. Use the search bar below to find exactly what you need.
+              Browse our exclusive selection of {slug}. Use the search bar below
+              to find exactly what you need.
             </p>
 
             {/* ⭐ Styled Search Bar */}
             <div className="relative w-full max-w-lg group">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
               <input
@@ -95,8 +105,13 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
           {/* No Products Found State */}
           {currentItems.length === 0 && (
             <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300">
-              <p className="text-slate-500 text-lg font-medium">No products match your search.</p>
-              <button onClick={() => setSearch("")} className="mt-4 text-indigo-600 hover:underline">
+              <p className="text-slate-500 text-lg font-medium">
+                No products match your search.
+              </p>
+              <button
+                onClick={() => setSearch("")}
+                className="mt-4 text-indigo-600 hover:underline"
+              >
                 Clear search
               </button>
             </div>
@@ -135,9 +150,12 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
                   </p>
 
                   <div className="flex justify-between items-center pt-4 border-t border-slate-100 mt-auto">
-                    <span className="text-2xl font-extrabold text-slate-900">
-                      ₹{product.price.toLocaleString()}
-                    </span>
+                    {product.price > 0 && (
+                      <span className="text-2xl font-extrabold text-slate-900">
+                        ₹{product.price.toLocaleString()}
+                      </span>
+                    )}
+
                     <span className="text-sm font-medium text-indigo-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
                       View Details →
                     </span>

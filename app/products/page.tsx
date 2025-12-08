@@ -22,9 +22,10 @@ export default function ProductsPage() {
   }, []);
 
   useEffect(() => {
-    const results = products.filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase())
+    const results = products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.category.toLowerCase().includes(search.toLowerCase())
     );
 
     setFilteredProducts(results);
@@ -50,7 +51,6 @@ export default function ProductsPage() {
 
       <section className="relative w-full py-16 overflow-hidden">
         <div className="container-global px-4 md:px-10 max-w-7xl mx-auto space-y-12">
-          
           {/* ⭐ HEADER & SEARCH */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
@@ -66,8 +66,18 @@ export default function ProductsPage() {
             {/* ⭐ SEARCH BAR */}
             <div className="relative w-full md:w-96 group">
               <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
               <input
@@ -85,7 +95,9 @@ export default function ProductsPage() {
           {/* ⭐ PRODUCT GRID */}
           {currentItems.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300">
-              <p className="text-slate-500 font-medium">No products match your search criteria.</p>
+              <p className="text-slate-500 font-medium">
+                No products match your search criteria.
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
@@ -109,9 +121,13 @@ export default function ProductsPage() {
                       </div>
                     )}
                     {/* Floating Price Tag */}
-                    <div className="absolute top-4 right-4 px-4 py-1.5 bg-white/90 backdrop-blur shadow-lg rounded-full">
-                      <p className="text-sm font-bold text-slate-900">₹{p.price}</p>
-                    </div>
+                    {p.price > 0 && (
+                      <div className="absolute top-4 right-4 px-4 py-1.5 bg-white/90 backdrop-blur shadow-lg rounded-full">
+                        <p className="text-sm font-bold text-slate-900">
+                          ₹{p.price}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Content */}
@@ -119,7 +135,7 @@ export default function ProductsPage() {
                     <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-widest rounded-md">
                       {p.category}
                     </span>
-                    
+
                     <h3 className="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">
                       {p.name}
                     </h3>
@@ -137,8 +153,19 @@ export default function ProductsPage() {
                                  text-white text-sm font-bold py-3.5 rounded-2xl transition-all duration-300 shadow-lg shadow-slate-200"
                     >
                       View Details
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-x-1 transition-transform">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                        />
                       </svg>
                     </Link>
                   </div>

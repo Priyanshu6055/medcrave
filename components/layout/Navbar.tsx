@@ -94,9 +94,9 @@ export default function Navbar() {
       <div className="container-global px-6 flex justify-between items-center max-w-7xl mx-auto">
         {/* LOGO */}
         <Link href="/" className="relative flex items-center group">
-          <div className="h-10 md:h-14 overflow-hidden rounded-lg">
+          <div className="h-10 md:h-17 overflow-hidden rounded-lg">
             <motion.img
-              src="/logos/medcrave-logo.jpg"
+              src="/logos/medcrave-logo.png"
               alt="Medcrave Logo"
               className="h-full w-auto object-contain"
               animate={scrolled ? { scale: 0.95 } : { scale: 1 }}
@@ -168,7 +168,7 @@ export default function Navbar() {
         {/* ⭐ ROYAL BLUE INQUIRY BUTTON (Rounded XL) */}
         <div className="hidden md:flex items-center ml-4">
           <Link href="/contact">
-            <Button className="bg-[#1A56DB] hover:bg-[#1E429F] text-white py-2 px-6 rounded-xl transition-all shadow-lg shadow-blue-200">
+            <Button className="rounded-xl">
               Inquiry
             </Button>
           </Link>
