@@ -64,7 +64,7 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
       <section className="py-20">
         <div className="container-global px-4 md:px-8 max-w-7xl mx-auto">
           {/* ⭐ Header & Search Section */}
-          <div className="flex flex-col items-center mb-16 text-center">
+          <div className="flex flex-col mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
               Collection:{" "}
               <span className="text-indigo-600 capitalize">{slug}</span>

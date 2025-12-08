@@ -1,40 +1,42 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import Image from "next/image";
 
-interface BannerProps {
-  heading: string;
-  subtitle?: string;
-}
-
-export default function AboutBanner({ heading, subtitle }: BannerProps) {
-  const pathname = usePathname();
-
+export default function BannerWrapper({ heading, subtitle, pathname }: any) {
   return (
     <section
       key={pathname}
       className="
-        w-full h-[60vh] 
-        flex items-center 
-        bg-[#030b0e] 
-        text-white 
+        relative
+        w-full h-[60vh]
+        flex items-center
+        text-white
+        overflow-hidden
       "
     >
-      <div className="container-global">
+      {/* Background Image */}
+      <Image
+        src="/bg/lab-dark-bg.png"  // change here
+        alt="banner background"
+        fill
+        priority
+        className="object-cover object-center"
+      />
+
+
+      {/* CONTENT */}
+      <div className="container-global relative z-10">
         <div className="max-w-2xl">
-          {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#00d2ef] leading-tight">
             {heading}
           </h1>
 
-          {/* Subtitle */}
           {subtitle && (
-            <p className="mt-3 text-gray-300 text-sm sm:text-base leading-relaxed max-w-lg">
+            <p className="mt-3 text-gray-200 text-sm sm:text-base max-w-lg leading-relaxed">
               {subtitle}
             </p>
           )}
 
-          {/* Static Underline */}
           <div className="mt-4 h-[2px] w-20 bg-[#00d2ef] rounded-full"></div>
         </div>
       </div>
