@@ -22,7 +22,6 @@ export async function POST(req: Request) {
 
     const token = generateToken(admin._id.toString());
 
-    // 🍪 NEXT.JS 16 FIX — async cookies
     const cookieStore = await cookies();
     await cookieStore.set("token", token, {
       httpOnly: true,

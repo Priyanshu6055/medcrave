@@ -2,9 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-  const cookieStore = await cookies();
-
-  cookieStore.set({
+  (await cookies()).set({
     name: "token",
     value: "",
     httpOnly: true,
@@ -13,5 +11,5 @@ export async function POST() {
     path: "/",
   });
 
-  return NextResponse.json({ success: true });
+  return new NextResponse(null, { status: 204 });
 }
