@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 import BannerWrapper from "@/components/about/AboutBannerWrapper";
 
+const PRIMARY = "#7A3283";      // Medcrave Purple
+const SECONDARY = "#85CD7C";    // Complementary Green
+
 interface ProductDetailsProps {
   params: Promise<{ id: string }>;
 }
@@ -15,10 +18,10 @@ export default function ProductDetails(props: ProductDetailsProps) {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // 3. Fetch Data (Client-side)
+  // Fetch product
   useEffect(() => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    
+
     fetch(`${baseUrl}/api/products/${id}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
@@ -31,21 +34,30 @@ export default function ProductDetails(props: ProductDetailsProps) {
       });
   }, [id]);
 
-  // Loading State
+  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-slate-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+        <div
+          className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2"
+          style={{ borderColor: PRIMARY }}
+        ></div>
       </div>
     );
   }
 
-  // Not Found State
+  // Not found
   if (!product) {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center bg-slate-50">
         <h1 className="text-3xl font-bold text-slate-800">Product Not Found</h1>
-        <a href="/products" className="mt-4 text-indigo-600 hover:underline">Return to Products</a>
+        <a
+          href="/products"
+          style={{ color: PRIMARY }}
+          className="mt-4 hover:underline"
+        >
+          Return to Products
+        </a>
       </div>
     );
   }
@@ -53,42 +65,62 @@ export default function ProductDetails(props: ProductDetailsProps) {
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       
-      {/* ⭐ Banner */}
-      <BannerWrapper heading={product.name} subtitle={product.category} />
+      {/* Banner */}
+      <BannerWrapper heading={product.name} subtitle={product.category} pathname={id} />
 
       <section className="py-12 md:py-16">
         <div className="container-global px-4 md:px-8 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
-            {/* ⭐ COLUMN 1: Image Grid (Thumbnails) */}
+            {/* GALLERY */}
             <div className="space-y-4">
-               <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">
-                 Product Gallery (Click to View)
-               </h3>
-               
-               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">
+                Product Gallery (Click to View)
+              </h3>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {product.images.map((img: string, i: number) => (
-                  <div 
+                  <div
                     key={i}
                     onClick={() => setSelectedImage(img)}
-                    className="aspect-square cursor-pointer overflow-hidden rounded-xl border border-slate-200 shadow-sm hover:shadow-lg hover:border-indigo-400 transition-all duration-300 group bg-white"
+                    className="
+                      aspect-square cursor-pointer overflow-hidden rounded-xl 
+                      border bg-white shadow-sm group transition-all duration-300
+                    "
+                    style={{
+                      borderColor: `${PRIMARY}20`,
+                    }}
                   >
                     <img
                       src={img}
                       alt={`${product.name} ${i}`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="
+                        w-full h-full object-cover 
+                        group-hover:scale-110 transition-transform duration-500
+                      "
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* ⭐ COLUMN 2: Details (No Price) */}
+            {/* DETAILS COLUMN */}
             <div className="space-y-8">
               <div>
-                <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wider rounded-full mb-3">
+                {/* Category Badge */}
+                <span
+                  className="
+                    inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full mb-3
+                  "
+                  style={{
+                    backgroundColor: `${SECONDARY}30`,
+                    color: PRIMARY,
+                  }}
+                >
                   {product.category}
                 </span>
+
+                {/* Product Name */}
                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
                   {product.name}
                 </h1>
@@ -96,30 +128,51 @@ export default function ProductDetails(props: ProductDetailsProps) {
 
               {/* Description */}
               <div className="prose prose-slate max-w-none">
-                <h3 className="text-lg font-bold text-slate-900 border-l-4 border-indigo-600 pl-3">
+                <h3
+                  className="text-lg font-bold pl-3"
+                  style={{
+                    borderLeft: `4px solid ${PRIMARY}`,
+                    color: PRIMARY,
+                  }}
+                >
                   Description
                 </h3>
-                <p className="text-slate-600 leading-relaxed mt-2 text-justify">
+
+                <p className="text-slate-700 leading-relaxed mt-2 text-justify">
                   {product.description}
                 </p>
               </div>
 
-              {/* Advantages Box */}
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-100 transition-colors">
-                <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <span className="text-indigo-600">★</span> Key Advantages
+              {/* Advantages */}
+              <div
+                className="
+                  bg-white p-6 rounded-2xl shadow-sm 
+                  transition-colors
+                "
+                style={{
+                  border: `1px solid ${PRIMARY}20`,
+                }}
+              >
+                <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+                  <span style={{ color: PRIMARY }}>★</span> Key Advantages
                 </h3>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-700 leading-relaxed">
                   {product.advantages}
                 </p>
               </div>
 
-              {/* Uses Box */}
-              <div className="bg-slate-100 p-6 rounded-2xl border border-transparent">
-                <h3 className="text-lg font-bold text-slate-900 mb-3">
+              {/* Uses */}
+              <div
+                className="p-6 rounded-2xl shadow-sm"
+                style={{
+                  backgroundColor: `${SECONDARY}10`,
+                  border: `1px solid ${SECONDARY}20`,
+                }}
+              >
+                <h3 className="text-lg font-bold mb-3" style={{ color: PRIMARY }}>
                   Common Uses
                 </h3>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-700 leading-relaxed">
                   {product.uses}
                 </p>
               </div>
@@ -129,29 +182,28 @@ export default function ProductDetails(props: ProductDetailsProps) {
         </div>
       </section>
 
-      {/* ⭐ Full Screen Image Modal */}
+      {/* FULLSCREEN IMAGE VIEWER */}
       {selectedImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
-          onClick={() => setSelectedImage(null)} // Click outside to close
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4"
+          style={{ backgroundColor: "rgba(0,0,0,0.85)" }}
+          onClick={() => setSelectedImage(null)}
         >
           <div className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center">
-            {/* Close Button */}
-            <button 
+            {/* Close button */}
+            <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 text-white hover:text-indigo-400 transition-colors"
+              className="absolute -top-12 right-0 transition-colors"
+              style={{ color: SECONDARY }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              ✕
             </button>
 
-            {/* Big Image */}
-            <img 
-              src={selectedImage} 
-              alt="Full view" 
+            <img
+              src={selectedImage}
+              alt="Full view"
               className="max-w-full max-h-[85vh] rounded-lg shadow-2xl object-contain"
-              onClick={(e) => e.stopPropagation()} // Prevent close when clicking image itself
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         </div>

@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 
+/* THEME COLORS */
+:root {
+  --primary: #7A3283;       /* Medcrave Purple */
+  --secondary: #85CD7C;     /* Complementary Green */
+  --primary-light: #E8C4EC; /* Soft bright purple for accents */
+}
+
 /* CONTAINER */
 .blog-slider {
   width: 95%;
@@ -8,14 +15,17 @@
   padding: 25px;
   border-radius: 25px;
   height: 400px;
-  box-shadow: 0px 14px 80px rgba(10, 77, 104, 0.15); /* soft medical blue shadow */
+
+  /* Purple-tinted premium shadow */
+  box-shadow: 0px 14px 80px rgba(122, 50, 131, 0.18);
+
   position: relative;
   transition: all 0.3s;
-  background-image: url("../../public/bg/blue-bg.png");
-    background-position: center;
+
+  background-image: url("../../public/bg/purple-bg.png");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  
 }
 
 .blog-slider__item {
@@ -34,27 +44,33 @@
   transition: all 0.4s;
 }
 
-/* -------------------------------------------------------------------
-   IMAGE WRAPPER — MEDICAL BLUE (NO GRADIENT)
--------------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   IMAGE WRAPPER — PURPLE THEME (NO GRADIENTS)
+------------------------------------------------------------ */
 .blog-slider__img {
   width: 300px;
   height: 300px;
   flex-shrink: 0;
-  background: #0A4D68; /* Solid medical blue */
+
+  background: var(--primary);
+
   border-radius: 20px;
   overflow: hidden;
   transform: translateX(-80px);
   position: relative;
-  box-shadow: 4px 13px 30px rgba(10, 77, 104, 0.25);
+
+  /* Purple shadow */
+  box-shadow: 4px 13px 30px rgba(122, 50, 131, 0.25);
 }
 
-/* Soften blue with transparent overlay */
+/* Soft highlight overlay */
 .blog-slider__img::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(5, 191, 219, 0.147); /* cyan tint overlay */
+
+  /* Light purple tint overlay */
+  background: rgba(218, 158, 226, 0.12);
   border-radius: 20px;
 }
 
@@ -67,15 +83,15 @@
   transition: all 0.3s;
 }
 
-/* -------------------------------------------------------------------
-   TEXT COLORS — CLEAN MEDICAL BLUE PALETTE
--------------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   TEXT COLORS — MEDCRAVE STYLE
+------------------------------------------------------------ */
 .blog-slider__content {
   padding-right: 25px;
 }
 
 .blog-slider__code {
-  color: #05BFDB; /* cyan highlight */
+  color: var(--secondary); /* Highlight in green */
   margin-bottom: 15px;
   display: block;
   font-weight: 500;
@@ -83,40 +99,43 @@
 
 .blog-slider__title {
   font-size: 24px;
-  font-weight: 700;
-  color: #0A4D68; /* strong blue title */
+  font-weight: 800;
+
+  /* Bright Medcrave Purple */
+  color: var(--primary);
   margin-bottom: 20px;
 }
 
 .blog-slider__text {
-  color: rgb(28 41 53); /* medical dark text */
+  color: rgb(28 41 53); /* Neutral dark text */
   margin-bottom: 30px;
   line-height: 1.5em;
 }
 
-/* -------------------------------------------------------------------
-   BUTTON — PRIMARY BLUE (NO GRADIENT)
--------------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   BUTTON — PURPLE ACCENT
+------------------------------------------------------------ */
 .blog-slider__button {
   display: inline-flex;
-  background: #0A4D68; /* solid medical blue */
+  background: var(--primary);
   padding: 15px 35px;
   border-radius: 50px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   letter-spacing: 1px;
-  box-shadow: 0px 10px 30px rgba(10, 77, 104, 0.25);
+
+  box-shadow: 0px 10px 30px rgba(122, 50, 131, 0.3);
   transition: 0.3s;
 }
 
 .blog-slider__button:hover {
-  background: #083A50; /* darker hover */
+  background: #63296A; /* Slightly darker purple */
 }
 
-/* -------------------------------------------------------------------
-   PAGINATION — BLUE & CYAN
--------------------------------------------------------------------- */
+/* -----------------------------------------------------------
+   PAGINATION — PURPLE & GREEN
+------------------------------------------------------------ */
 .blog-slider__pagination {
   position: absolute;
   right: 20px;
@@ -130,21 +149,23 @@
   height: 11px;
   margin: 8px 0;
   border-radius: 10px;
-  background: #05BFDB; /* cyan bullet */
+
+  background: var(--secondary); /* Green */
   opacity: 0.3;
   transition: all 0.3s;
 }
 
 .blog-slider__pagination .swiper-pagination-bullet-active {
   opacity: 1;
-  background: #0A4D68; /* primary blue */
+  background: var(--primary); /* Purple */
   height: 30px;
-  box-shadow: 0px 0px 15px rgba(10, 77, 104, 0.3);
+
+  box-shadow: 0px 0px 15px rgba(122, 50, 131, 0.4);
 }
 
-/* -------------------------------------------------------------------
+/* -----------------------------------------------------------
    RESPONSIVE
--------------------------------------------------------------------- */
+------------------------------------------------------------ */
 @media (max-width: 768px) {
   .blog-slider {
     margin: 180px auto;
@@ -179,6 +200,7 @@
   }
 }
 
+/* Fade Slide */
 .blog-slider__item {
   opacity: 0 !important;
   transition: opacity 0.4s ease;
@@ -187,4 +209,3 @@
 .blog-slider__item.swiper-slide-active {
   opacity: 1 !important;
 }
-

@@ -16,6 +16,13 @@ import "swiper/css/pagination";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// -----------------------------------
+// THEME COLORS (Type Safe)
+// -----------------------------------
+const PRIMARY = "#7A3283";
+const SECONDARY = "#85CD7C";
+const DARK_BG = "#000814";
+
 interface SlideItem {
   image: string;
   titleWords: string[];
@@ -24,32 +31,36 @@ interface SlideItem {
 
 export default function HeroSlider() {
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
-  const slideRef = useRef<HTMLDivElement | null>(null);
+
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const slideRef = useRef<HTMLDivElement>(null);
 
   const slides: SlideItem[] = [
     {
-      image: "/slide/slide1.png",
+      image: "/slide/purple-slide1.png",
       titleWords: ["Medcrave."],
       subtitle: "Explore our next-gen diagnostic ecosystem →",
     },
     {
-      image: "/slide/slide5.jpg",
+      image: "/slide/purple-slide2.png",
       titleWords: ["Precision Engineering."],
       subtitle: "Discover advanced surgical equipment →",
     },
     {
-      image: "/slide/slide6.png",
+      image: "/slide/purple-slide3.png",
       titleWords: ["Real-Time Monitoring."],
       subtitle: "See Medcrave monitoring solutions →",
     },
   ];
 
+  // -----------------------------------
+  // GSAP SLIDE ANIMATION
+  // -----------------------------------
   useEffect(() => {
     if (!slideRef.current) return;
 
     const tl = gsap.timeline({
-      defaults: { ease: "power3.out", duration: 1 },
+      defaults: { ease: "power3.out", duration: 1.2 },
     });
 
     tl.fromTo(
@@ -76,26 +87,31 @@ export default function HeroSlider() {
   return (
     <div
       ref={slideRef}
-      className="relative w-full h-[75vh] min-h-[350px] overflow-hidden group bg-[#000814]"
+      className="relative w-full h-[75vh] min-h-[350px] overflow-hidden group"
+      style={{ backgroundColor: DARK_BG }}
     >
-      {/* ⭐ Futuristic animated grid - Updated to Royal Blue Tints */}
+      {/* ⭐ PURPLE GRID OVERLAY (THEMED) */}
       <div
         className="
           grid-overlay absolute inset-0 z-[2] pointer-events-none
-          bg-[linear-gradient(rgba(26,86,219,0.08)_1px,transparent_1px),linear-gradient(to_right,rgba(26,86,219,0.08)_1px,transparent_1px)]
+          bg-[linear-gradient(rgba(122,50,131,0.10)_1px,transparent_1px),
+              linear-gradient(to_right,rgba(122,50,131,0.10)_1px,transparent_1px)]
           bg-[size:80px_80px]
         "
       />
 
-      {/* ⭐ Royal Blue glow orb replacement */}
+      {/* ⭐ PURPLE GLOW ORB (THEMED) */}
       <div
         className="
           absolute inset-0 z-[1] pointer-events-none 
-          bg-[radial-gradient(circle_at_center,rgba(26,86,219,0.18),transparent_65%)]
+          bg-[radial-gradient(circle_at_center,rgba(122,50,131,0.18),transparent_65%)]
           animate-pulse
         "
       />
 
+      {/* -----------------------------------
+          SWIPER
+      ----------------------------------- */}
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
@@ -103,27 +119,34 @@ export default function HeroSlider() {
         navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
         loop
         speed={1200}
-        onSlideChangeTransitionStart={(s: SwiperType) =>
-          setActiveSlideIndex(s.realIndex)
+        onSlideChangeTransitionStart={(swiper: SwiperType) =>
+          setActiveSlideIndex(swiper.realIndex)
         }
         className="h-full w-full z-[3]"
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
+        {slides.map((slide: SlideItem, index: number) => (
+          <SwiperSlide key={slide.image}>
             <div className="relative w-full h-full">
+              {/* Image */}
               <motion.img
                 src={slide.image}
                 className="absolute inset-0 w-full h-full object-cover"
                 initial={{ scale: 1.15, opacity: 0.75 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1.8, ease: "easeOut" }}
-                alt="Medcrave slide"
+                alt={slide.titleWords[0]}
               />
 
-              {/* ⭐ Deep Royal Blue Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#000814]/70 via-[#1A56DB]/20 to-[#000814]/85 z-[4]" />
+              {/* ⭐ PURPLE OVERLAY */}
+              <div
+                className="absolute inset-0 z-[4]"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(122,50,131,0.25), rgba(0,0,0,0.85))",
+                }}
+              />
 
-              {/* Text container */}
+              {/* TEXT */}
               <div className="absolute bottom-12 left-8 sm:left-14 z-[10] max-w-[80%] sm:max-w-[60%]">
                 <h1
                   ref={titleRef}
@@ -135,7 +158,7 @@ export default function HeroSlider() {
                       loop={1}
                       cursor
                       cursorStyle="_"
-                      cursorColor="#1A56DB"
+                      cursorColor={PRIMARY}
                       typeSpeed={55}
                       deleteSpeed={30}
                       delaySpeed={900}
@@ -145,15 +168,17 @@ export default function HeroSlider() {
                   )}
                 </h1>
 
-                {/* ⭐ Royal Blue Subtitle Button */}
+                {/* ⭐ PURPLE BUTTON */}
                 <button
                   className="
                     subtitle-btn mt-6 px-8 py-3 
-                    bg-[#1A56DB] text-white rounded-xl font-bold
-                    shadow-[0_10px_20px_rgba(26,86,219,0.3)] 
-                    hover:bg-[#1E429F] hover:scale-[1.04]
-                    transition-all duration-300
+                    text-white rounded-xl font-bold
+                    hover:scale-[1.04] transition-all duration-300
+                    shadow-[0_10px_20px_rgba(122,50,131,0.30)]
                   "
+                  style={{
+                    backgroundColor: PRIMARY,
+                  }}
                 >
                   {slide.subtitle}
                 </button>
@@ -162,24 +187,40 @@ export default function HeroSlider() {
           </SwiperSlide>
         ))}
 
-        {/* Navigation Buttons - Royal Blue hover */}
+        {/* -----------------------------------
+            NAV BUTTONS (Purple hover)
+        ----------------------------------- */}
         <div className="absolute inset-0 flex items-center justify-between px-4 z-[20] pointer-events-none">
           <div
             className="
-            prev-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
-            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-[#1A56DB] 
-            transition backdrop-blur-md border border-white/20
-          "
+              prev-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
+              shadow-xl opacity-0 group-hover:opacity-100 
+              transition backdrop-blur-md border border-white/20
+            "
+            style={{ transition: "0.3s", }}
+            onMouseEnter={(e) =>
+              ((e.currentTarget.style.backgroundColor = PRIMARY))
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"))
+            }
           >
             ❮
           </div>
 
           <div
             className="
-            next-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
-            shadow-xl opacity-0 group-hover:opacity-100 hover:bg-[#1A56DB] 
-            transition backdrop-blur-md border border-white/20
-          "
+              next-btn pointer-events-auto bg-white/10 text-white p-3 rounded-full 
+              shadow-xl opacity-0 group-hover:opacity-100 
+              transition backdrop-blur-md border border-white/20
+            "
+            style={{ transition: "0.3s" }}
+            onMouseEnter={(e) =>
+              ((e.currentTarget.style.backgroundColor = PRIMARY))
+            }
+            onMouseLeave={(e) =>
+              ((e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"))
+            }
           >
             ❯
           </div>

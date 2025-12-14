@@ -16,6 +16,15 @@ import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ----------------------------------------
+// THEME COLORS
+// ----------------------------------------
+const PRIMARY = "#7A3283"; // Purple
+const SECONDARY = "#85CD7C"; // Green
+
+// ----------------------------------------
+// TYPES
+// ----------------------------------------
 interface NodeItem {
   icon: React.ReactNode;
   label: string;
@@ -36,9 +45,11 @@ export default function NeuroVortexShowcaseTilt() {
     { icon: <FaHeartbeat />, label: "Vitals", x: "80%", y: "85%" },
   ];
 
+  // ----------------------------------------
+  // GSAP Animations
+  // ----------------------------------------
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* 🌪 Soft rotating vortex BG */
       if (vortexRef.current) {
         gsap.to(vortexRef.current, {
           rotate: 360,
@@ -48,7 +59,6 @@ export default function NeuroVortexShowcaseTilt() {
         });
       }
 
-      /* 🌬 Float effect on nodes */
       nodesRef.current.forEach((node) => {
         gsap.to(node, {
           x: gsap.utils.random(-12, 12),
@@ -60,7 +70,6 @@ export default function NeuroVortexShowcaseTilt() {
         });
       });
 
-      /* ✨ Text reveal */
       if (titleRef.current) {
         gsap.from(titleRef.current, {
           opacity: 0,
@@ -81,17 +90,20 @@ export default function NeuroVortexShowcaseTilt() {
   return (
     <section className="relative py-40 bg-white text-slate-900 overflow-hidden">
 
-      {/* ⭐ VORTEX BG: Updated to Royal Blue Gradient */}
+      {/* ⭐ VORTEX BG – Purple core with light green tint edges */}
       <div
         ref={vortexRef}
-        className="absolute inset-0 mx-auto w-[1300px] h-[1300px] rounded-full 
-        bg-[radial-gradient(circle,rgba(26,86,219,0.18),transparent_70%)] 
-        blur-3xl opacity-60"
+        className="absolute inset-0 mx-auto w-[1300px] h-[1300px] rounded-full blur-3xl opacity-60"
+        style={{
+          background: `radial-gradient(circle, ${PRIMARY}33, ${SECONDARY}22, transparent 70%)`,
+        }}
       />
 
-      {/* ⭐ NEBULA OVERLAY: Subtle Royal Blue conic tint */}
-      <div className="absolute inset-0 bg-[conic-gradient(from_180deg,rgba(26,86,219,0.05),transparent_60%)]
-      blur-3xl" />
+      {/* Soft environmental glow */}
+      <div
+        className="absolute inset-0 blur-[140px] opacity-40"
+        style={{ background: `radial-gradient(circle, ${SECONDARY}33, transparent 60%)` }}
+      />
 
       {/* HEADER */}
       <div className="relative z-20 text-center max-w-3xl mx-auto px-6">
@@ -100,23 +112,34 @@ export default function NeuroVortexShowcaseTilt() {
           className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight"
         >
           Precision Reimagined
-          <span className="text-[#1A56DB] block">Neuro-Vortex Medical Engine</span>
+          <span className="block" style={{ color: PRIMARY }}>
+            Neuro-Vortex Medical Engine
+          </span>
         </h1>
 
+        {/* Minimal green underline */}
+        <div
+          className="w-20 h-2 mx-auto mt-4 rounded-full"
+          style={{ backgroundColor: SECONDARY }}
+        />
+
         <p className="mt-6 text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-          A cinematic demonstration of next-gen AI medical systems built for accuracy, 
-          performance, and intelligent diagnostics.
+          A cinematic demonstration of next-gen AI medical systems built for
+          accuracy, performance, and intelligent diagnostics.
         </p>
       </div>
 
-      {/* DEVICE + ICONS */}
+      {/* DEVICE + FLOATING ICON NODES */}
       <div className="relative mt-32 flex justify-center">
-        <div
-          className="relative w-[360px] sm:w-[460px] lg:w-[520px]
-          h-[360px] sm:h-[460px] lg:h-[520px]"
-        >
-          {/* ⭐ AURORA GLOW: Updated to softer Royal Blue blur */}
-          <div className="absolute inset-0 bg-[#1A56DB]/15 blur-3xl z-10" />
+        <div className="relative w-[360px] sm:w-[460px] lg:w-[520px] h-[360px] sm:h-[460px] lg:h-[520px]">
+
+          {/* Purple / Green ambient glow */}
+          <div
+            className="absolute inset-0 blur-3xl z-10"
+            style={{
+              background: `radial-gradient(circle, ${PRIMARY}26, ${SECONDARY}26)`,
+            }}
+          />
 
           {/* DEVICE IMAGE */}
           <div className="relative w-full h-full flex items-center justify-center">
@@ -125,15 +148,18 @@ export default function NeuroVortexShowcaseTilt() {
                 src="/images/girl-img.png"
                 alt="Medical Device"
                 fill
-                className="object-contain z-20 drop-shadow-[0_40px_60px_rgba(26,86,219,0.15)]"
+                className="object-contain z-20"
+                style={{
+                  filter: "drop-shadow(0 40px 60px rgba(122,50,131,0.25))",
+                }}
               />
             </div>
           </div>
 
-          {/* ICON NODES */}
+          {/* FLOATING PURPLE ICONS */}
           {nodeItems.map((node, i) => (
             <Node
-              key={i}
+              key={node.label}
               innerRef={(el) => el && (nodesRef.current[i] = el)}
               icon={node.icon}
               label={node.label}
@@ -146,39 +172,54 @@ export default function NeuroVortexShowcaseTilt() {
 
       {/* CTA */}
       <div className="mt-20 text-center">
-                <Link href="/products">
-                  <Button className="rounded-xl">Explore More</Button>
-                </Link>
+        <Link href="/products">
+          <Button className="rounded-xl">Explore More</Button>
+        </Link>
       </div>
     </section>
   );
 }
 
-/* NODE COMPONENT: Updated style to match Royal Blue UI */
-function Node({
-  innerRef,
-  icon,
-  label,
-  x,
-  y,
-}: {
+/* ----------------------------------------
+   NODE COMPONENT — PURPLE ONLY + NO BORDER
+----------------------------------------- */
+interface NodeProps {
   innerRef: (el: HTMLDivElement | null) => void;
   icon: React.ReactNode;
   label: string;
   x: string;
   y: string;
-}) {
+}
+
+function Node({ innerRef, icon, label, x, y }: NodeProps) {
   return (
     <div
       ref={innerRef}
       className="absolute flex flex-col items-center text-center z-30"
       style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
     >
-      <div className="w-14 h-14 rounded-2xl bg-white/80 backdrop-blur-xl border border-blue-100 
-      shadow-2xl shadow-blue-900/10 flex items-center justify-center text-[#1A56DB] text-xl">
+      {/* PURE PURPLE FLOATING ICON (NO BORDER) */}
+      <div
+        className="
+          w-14 h-14 rounded-2xl 
+          bg-white/90 backdrop-blur-xl 
+          flex items-center justify-center text-xl
+        "
+        style={{
+          color: PRIMARY,
+          boxShadow: `0 0 22px ${PRIMARY}55`, // soft purple glow
+        }}
+      >
         {icon}
       </div>
-      <p className="text-[10px] uppercase tracking-widest mt-3 font-extrabold text-slate-400">{label}</p>
+
+      {/* PURPLE LABEL */}
+      <p
+        className="text-[10px] uppercase tracking-widest mt-3 font-extrabold"
+        style={{ color: PRIMARY }}
+      >
+        {label}
+      </p>
     </div>
   );
 }

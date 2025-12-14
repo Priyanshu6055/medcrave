@@ -5,6 +5,15 @@ import EventCard from "@/components/ui/EquipmentCard";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 
+// ----------------------------------------
+// THEME COLORS
+// ----------------------------------------
+const PRIMARY = "#7A3283";
+const SECONDARY = "#85CD7C";
+
+// ----------------------------------------
+// EQUIPMENT DATA (Typed Optional)
+// ----------------------------------------
 const equipment = [
   {
     image: "/home-equipment/fetal-monitor.png",
@@ -29,7 +38,7 @@ const equipment = [
 ];
 
 export default function EventSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
 
   const stats = useRef({
@@ -39,7 +48,7 @@ export default function EventSection() {
     inside: false,
   });
 
-const rafRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   const animate = () => {
     if (!scrollRef.current) return;
@@ -91,29 +100,36 @@ const rafRef = useRef<number | null>(null);
   return (
     <section className="py-16 bg-slate-50 overflow-hidden">
       <div className="container-global px-4 max-w-7xl mx-auto">
-        
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div className="space-y-2">
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              Clinical <span className="text-[#1A56DB]">Equipment</span>
+              Clinical{" "}
+              <span style={{ color: PRIMARY }}>Equipment</span>
             </h2>
-            <div className="h-1 w-20 bg-[#ee9e26] rounded-full" />
+
+            {/* Divider Bar - Purple Instead of Orange */}
+            <div
+              className="h-1 w-20 rounded-full"
+              style={{ backgroundColor: PRIMARY }}
+            />
+
             <p className="text-slate-500 text-sm max-w-md leading-relaxed">
               Explore our range of clinical-grade neonatal diagnostics and
               monitoring solutions.
             </p>
           </div>
 
+          {/* CTA BUTTON (Purple themed) */}
           <Button
-            className="bg-[#1A56DB] text-white px-6 py-2 rounded-xl text-xs hover:bg-[#1E429F]"
+            className="text-white px-6 py-2 rounded-xl text-xs"
             onClick={() => router.push("/products")}
           >
             View Full Catalog
           </Button>
         </div>
 
-        {/* Slider */}
+        {/* Auto-scrolling Slider */}
         <div className="relative group w-full overflow-hidden">
           <div
             ref={scrollRef}

@@ -12,18 +12,27 @@ interface ButtonProps {
   className?: string;
 }
 
-export default function Button({ children, onClick, className = "" }: ButtonProps) {
+export default function Button({
+  children,
+  onClick,
+  className = "",
+}: ButtonProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const circlesTopLeft = container.querySelectorAll<HTMLElement>(".circle.top-left");
-    const circlesBottomRight =
-      container.querySelectorAll<HTMLElement>(".circle.bottom-right");
-    const effectButton = container.querySelector<HTMLElement>(".button.effect-button");
-    const triggerButton = container.querySelector<HTMLElement>(".button--bubble");
+    const circlesTopLeft =
+      container.querySelectorAll<HTMLElement>(".circle.top-left");
+    const circlesBottomRight = container.querySelectorAll<HTMLElement>(
+      ".circle.bottom-right"
+    );
+    const effectButton = container.querySelector<HTMLElement>(
+      ".button.effect-button"
+    );
+    const triggerButton =
+      container.querySelector<HTMLElement>(".button--bubble");
 
     if (
       circlesTopLeft.length !== 3 ||
@@ -63,7 +72,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         x: "-=10",
         y: "-=7",
       },
-      "-=0.1",
+      "-=0.1"
     );
     tl.to(
       circlesTopLeft[2],
@@ -73,7 +82,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         x: "-=15",
         y: "+=6",
       },
-      "-=0.1",
+      "-=0.1"
     );
     tl.to(circlesTopLeft[0], {
       duration: 1,
@@ -92,7 +101,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         y: "-=10",
         opacity: 0,
       },
-      "-=1",
+      "-=1"
     );
     tl.to(
       circlesTopLeft[2],
@@ -103,7 +112,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         y: "+=5",
         opacity: 0,
       },
-      "-=1",
+      "-=1"
     );
 
     tlBt1.set(circlesTopLeft, { x: 0, y: 0, rotation: -45 });
@@ -131,7 +140,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         x: "+=7",
         y: "+=3",
       },
-      "-=0.1",
+      "-=0.1"
     );
     tl2.to(
       circlesBottomRight[2],
@@ -141,7 +150,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         x: "+=15",
         y: "-=6",
       },
-      "-=0.2",
+      "-=0.2"
     );
     tl2.to(circlesBottomRight[0], {
       duration: 1,
@@ -159,7 +168,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         y: "+=7",
         opacity: 0,
       },
-      "-=1",
+      "-=1"
     );
     tl2.to(
       circlesBottomRight[2],
@@ -170,7 +179,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         y: "-=5",
         opacity: 0,
       },
-      "-=1",
+      "-=1"
     );
 
     tlBt2.set(circlesBottomRight, { x: 0, y: 0, rotation: 45 });
@@ -184,7 +193,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         duration: 0.8,
         scaleY: 1.1,
       },
-      0.1,
+      0.1
     );
     btTl.add(tlBt2, 0.2);
     btTl.to(
@@ -194,7 +203,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
         scale: 1,
         ease: Elastic.easeOut.config(1.2, 0.4),
       },
-      1.2,
+      1.2
     );
 
     btTl.timeScale(2.6);
@@ -221,7 +230,11 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
       <svg xmlns="http://www.w3.org/2000/svg" className="goo">
         <defs>
           <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="10"
+              result="blur"
+            />
             <feColorMatrix
               in="blur"
               mode="matrix"
@@ -257,9 +270,10 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
 
       <style jsx>{`
         :root {
-          --dark-blue: #222;
-          --green: #1f3bb3;
-          --action-color: var(--green);
+          --dark-bg: #4a1b52; /* Darker shade of primary for base buttons */
+          --primary: #7a3283; /* Medcrave Purple */
+          --secondary: #85cd7c; /* Complementary Green */
+          --action-color: var(--primary);
         }
 
         .button--bubble__container {
@@ -269,7 +283,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
 
         .button {
           -webkit-font-smoothing: antialiased;
-          background-color: var(--dark-blue);
+          background-color: var(--dark-bg);
           border: none;
           color: white;
           display: inline-block;
@@ -287,19 +301,20 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
 
         .button:hover {
           background-color: var(--action-color);
-          color: #ffffffff;
+          color: #fff;
           font-weight: 600;
         }
 
         .button:active {
-          transform: scale(0.80);
+          transform: scale(0.8);
         }
 
+        /* MAIN BUBBLE BUTTON */
         .button--bubble {
           position: relative;
           z-index: 2;
           color: white;
-          background: #1f5db3ff;
+          background: var(--primary); /* Purple Button */
           font-weight: 600;
         }
 
@@ -307,18 +322,20 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
           background: none;
         }
 
+        /* Bubble hover coloring */
         .button--bubble:hover + .button--bubble__effect-container .circle {
-          background: #1f3bb3;
+          background: var(--primary); /* Bubble becomes purple */
         }
 
         .button--bubble:hover + .button--bubble__effect-container .button {
-          background: #1f3bb3;
+          background: var(--primary);
         }
 
         .button--bubble:active + .button--bubble__effect-container {
           transform: scale(0.95);
         }
 
+        /* GOOEY EFFECT CONTAINER */
         .button--bubble__effect-container {
           position: absolute;
           display: block;
@@ -331,12 +348,13 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
           pointer-events: none;
         }
 
+        /* BUBBLE CIRCLES */
         .button--bubble__effect-container .circle {
           position: absolute;
           width: 25px;
           height: 25px;
           border-radius: 15px;
-          background: var(--dark-blue);
+          background: var(--dark-bg); /* Purple-tinted dark bg */
           transition: background 0.1s ease-out;
         }
 
@@ -350,6 +368,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
           right: 27%;
         }
 
+        /* INNER EFFECT BUTTON */
         .effect-button {
           position: absolute;
           width: 50%;
@@ -358,7 +377,7 @@ export default function Button({ children, onClick, className = "" }: ButtonProp
           left: 25%;
           z-index: 1;
           transform: translateY(-50%);
-          background: var(--dark-blue);
+          background: var(--dark-bg);
           transition: background 0.1s ease-out;
         }
 

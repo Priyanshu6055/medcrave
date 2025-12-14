@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 
+const PRIMARY = "#7A3283";      // Medcrave Purple
+const SECONDARY = "#85CD7C";    // Complementary Accent
+
 export default function EventCard({
   image,
   title,
@@ -18,7 +21,7 @@ export default function EventCard({
         h-[350px]
         bg-white rounded-2xl
         shadow-[0_4px_20px_rgba(0,0,0,0.06)]
-        hover:shadow-[0_12px_35px_rgba(26,86,219,0.12)]
+        hover:shadow-[0_12px_35px_rgba(122,50,131,0.15)]
         hover:-translate-y-1
         border border-slate-100
         transition-all duration-300
@@ -41,14 +44,14 @@ export default function EventCard({
           "
         />
 
-        {/* ⭐ Premium Badge: Royal Blue */}
+        {/* ⭐ Premium Badge — Purple */}
         <div
           className="
             absolute top-3 right-3 
-            bg-[#1A56DB] text-white
-            text-[9px] uppercase tracking-widest font-bold
+            text-white text-[9px] uppercase tracking-widest font-bold
             px-2.5 py-[4px] rounded-md shadow-lg
           "
+          style={{ backgroundColor: PRIMARY }}
         >
           Premium
         </div>
@@ -57,43 +60,56 @@ export default function EventCard({
       {/* CONTENT */}
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex-1 space-y-3">
-          {/* ⭐ Title: Royal Blue hover effect */}
-          <h2 className="text-[15px] font-bold text-slate-800 group-hover:text-[#1A56DB] transition-colors leading-snug line-clamp-2">
+          {/* ⭐ Title (purple hover) */}
+          <h2
+            className="
+              text-[15px] font-bold text-slate-800 
+              transition-colors leading-snug line-clamp-2
+              group-hover:text-[var(--primary)]
+            "
+            style={{ ["--primary" as any]: PRIMARY }}
+          >
             {title}
           </h2>
 
           {category && (
             <div
               className="
-                bg-blue-50/50
-                border-l-2 border-[#ee9e26]
-                rounded-r-lg p-2.5
-                text-[11px]
+                rounded-r-lg p-2.5 text-[11px]
+                border-l-2 
               "
+              style={{
+                backgroundColor: SECONDARY + "15",
+                borderColor: SECONDARY,
+              }}
             >
-              {/* ⭐ Detail: Amber accent used here */}
+              {/* Label */}
               <p className="text-slate-600">
-                <span className="font-bold text-[#ee9e26] uppercase text-[9px] block mb-0.5">Category</span> 
+                <span
+                  className="font-bold uppercase text-[9px] block mb-0.5"
+                  style={{ color: SECONDARY }}
+                >
+                  Category
+                </span>
                 {category}
               </p>
             </div>
           )}
         </div>
 
-        {/* ⭐ View Details Button: Royal Blue Theme */}
+        {/* ⭐ View Button — Purple */}
         <a href="/products">
           <button
             className="
               w-full py-2.5 mt-4
               text-[11px] font-extrabold uppercase tracking-widest
-              rounded-xl
-              bg-[#1A56DB] text-white
-              shadow-lg shadow-blue-200
-              hover:bg-[#1E429F]
-              hover:shadow-blue-300
-              transition-all duration-300
-              active:scale-95
+              rounded-xl text-white transition-all duration-300 active:scale-95
+              shadow-lg
             "
+            style={{
+              backgroundColor: PRIMARY,
+              boxShadow: `0 8px 20px ${PRIMARY}33`,
+            }}
           >
             View Details
           </button>

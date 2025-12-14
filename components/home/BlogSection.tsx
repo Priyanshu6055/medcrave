@@ -1,24 +1,48 @@
 "use client";
 
 import BlogSlider from "@/components/ui/BlogSlider";
+import type { FC } from "react";
 
-export default function BoxSection() {
+// ----------------------------------------
+// THEME COLORS (Type Safe)
+// ----------------------------------------
+const PRIMARY = "#7A3283";
+const SECONDARY = "#85CD7C";
+
+const BoxSection: FC = () => {
   return (
     <section
       className="
         py-20 
-        bg-gradient-to-br from-[#f8fdff] to-[#e9f0ff]
         relative overflow-hidden
       "
+      style={{
+        background: `linear-gradient(to bottom right, #faf6fb, #f3f8f4)`,
+      }}
     >
-      {/* faint glowing blobs behind */}
-      <div className="absolute -top-20 -left-20 w-[350px] h-[350px] bg-blue-300/25 rounded-full blur-[120px]"></div>
-      <div className="absolute bottom-10 right-10 w-[300px] h-[300px] bg-white/30 rounded-full blur-[100px]"></div>
+      {/* ⭐ Soft Purple Glow Blob */}
+      <div
+        className="
+          absolute -top-20 -left-20 
+          w-[350px] h-[350px] 
+          rounded-full blur-[120px]
+        "
+        style={{ backgroundColor: PRIMARY + "33" }} // 20% opacity
+      />
+
+      {/* ⭐ Soft Green Accent Glow */}
+      <div
+        className="
+          absolute bottom-10 right-10 
+          w-[300px] h-[300px] 
+          rounded-full blur-[100px]
+        "
+        style={{ backgroundColor: SECONDARY + "40" }} // 25% opacity
+      />
 
       <div
         className="
-          relative
-          max-w-6xl mx-auto
+          relative max-w-6xl mx-auto
           rounded-3xl p-10
           bg-white/10 backdrop-blur-[45px]
           border border-white/50
@@ -26,25 +50,31 @@ export default function BoxSection() {
           overflow-hidden
         "
       >
-        {/* inner shine */}
-        <div className="
-          absolute inset-0 
-          rounded-3xl 
-          bg-gradient-to-tr from-white/30 to-transparent
-          pointer-events-none
-        "></div>
+        {/* Inner shine */}
+        <div
+          className="
+            absolute inset-0 rounded-3xl 
+            bg-gradient-to-tr from-white/40 to-transparent
+            pointer-events-none
+          "
+        />
 
-        {/* subtle glass border highlight */}
-        <div className="
-          absolute inset-0 rounded-3xl border border-white/30 
-          backdrop-blur-[2px]
-        "></div>
+        {/* Glass border highlight */}
+        <div
+          className="
+            absolute inset-0 rounded-3xl 
+            border border-white/30 backdrop-blur-[2px]
+          "
+        />
 
-        {/* slight edge shadow */}
-        <div className="
-          absolute inset-0 rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.5)] 
-          pointer-events-none
-        "></div>
+        {/* Outer edge subtle shadow */}
+        <div
+          className="
+            absolute inset-0 rounded-3xl
+            shadow-[0_0_80px_rgba(255,255,255,0.5)]
+            pointer-events-none
+          "
+        />
 
         {/* CONTENT */}
         <div className="relative z-10">
@@ -53,4 +83,6 @@ export default function BoxSection() {
       </div>
     </section>
   );
-}
+};
+
+export default BoxSection;

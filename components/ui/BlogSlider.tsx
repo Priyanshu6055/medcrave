@@ -77,7 +77,7 @@ export default function BlogSlider() {
             <div className="blog-slider__item swiper-slide">
               <div className="blog-slider__img">
                 <img
-                  src="/images/products/neonatal-ventilator.png"
+                  src="/images/products/neonatal-ventilator.webp"
                   alt="Neonatal Ventilator"
                 />
               </div>

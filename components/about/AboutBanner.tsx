@@ -27,7 +27,7 @@ export default function BannerWrapper({ heading, subtitle, pathname }: any) {
       {/* CONTENT */}
       <div className="container-global relative z-10">
         <div className="max-w-2xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#00d2ef] leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#85CD7C] leading-tight">
             {heading}
           </h1>
 
@@ -37,7 +37,7 @@ export default function BannerWrapper({ heading, subtitle, pathname }: any) {
             </p>
           )}
 
-          <div className="mt-4 h-[2px] w-20 bg-[#00d2ef] rounded-full"></div>
+          <div className="mt-4 h-[2px] w-20 bg-[#85CD7C] rounded-full"></div>
         </div>
       </div>
     </section>
