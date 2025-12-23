@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import BannerWrapper from "@/components/about/AboutBannerWrapper";
 
-const PRIMARY = "#7A3283";     // Medcrave Purple
-const SECONDARY = "#85CD7C";   // Complementary Green
+const PRIMARY = "#7A3283"; // Medcrave Purple
+const SECONDARY = "#85CD7C"; // Complementary Green
 
 interface CategoryProductsPageProps {
   params: Promise<{ slug: string }>;
@@ -25,7 +25,7 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
   useEffect(() => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-    fetch(`${baseUrl}/api/products/category/${slug}`, { cache: "no-store" })
+    fetch(`/api/products/category/${slug}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.products);
@@ -192,7 +192,8 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
                   </p>
 
                   {/* Footer */}
-                  <div className="flex justify-between items-center pt-4 border-t mt-auto"
+                  <div
+                    className="flex justify-between items-center pt-4 border-t mt-auto"
                     style={{ borderColor: `${PRIMARY}22` }}
                   >
                     {product.price > 0 && (
