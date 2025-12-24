@@ -70,14 +70,16 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
               Collection:{" "}
               <span style={{ color: PRIMARY }} className="capitalize">
-                {slug}
+                  {decodedSlug}
               </span>
+
             </h2>
 
             <p className="text-slate-500 mb-8 max-w-lg">
-              Browse our exclusive selection of {slug}. Use the search bar below
-              to find exactly what you need.
+                Browse our exclusive selection of {decodedSlug}. Use the search bar below
+                to find exactly what you need.
             </p>
+
 
             {/* Search Bar */}
             <div className="relative w-full max-w-lg group">
@@ -104,7 +106,7 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder={`Search ${slug} products...`}
+                placeholder={`Search ${decodedSlug} products...`}
                 className="
                   w-full pl-11 pr-4 py-4 bg-white rounded-full shadow-sm
                   border border-slate-200 outline-none
