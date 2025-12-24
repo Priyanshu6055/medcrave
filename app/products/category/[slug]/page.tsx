@@ -17,6 +17,7 @@ export default function CategoryProductsPage(props: CategoryProductsPageProps) {
   const [products, setProducts] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const [search, setSearch] = useState("");
+    const decodedSlug = decodeURIComponent(slug);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
