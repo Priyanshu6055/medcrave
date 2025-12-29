@@ -8,9 +8,10 @@ import { TbPlus } from "react-icons/tb";
 
 const footerLinks = {
   products: [
-    { label: "Herbal Extracts", href: "/products/herbal-extracts" },
-    { label: "Nutraceutical Ingredients", href: "/products/nutraceuticals" },
-    { label: "Pharma Raw Materials", href: "/products/pharma-raw-materials" },
+    { label: "Medical Equipments", href: "/products/medical-equipments" },
+    { label: "Medical Devices", href: "/products/medical-devices" },
+    { label: "POCT Products", href: "/products/poct-products" },
+    { label: "Laboratory & Diagnostic Products", href: "/products/lab-diagnostic-products" },
   ],
   company: [
     { label: "About Medcrave", href: "/about" },
@@ -48,12 +49,11 @@ export default function Footer() {
       onMouseMove={handleMouseMove}
       className="relative border-t border-[#DFE6EE] text-[#102030] pt-14 pb-10 overflow-hidden bg-[url('/bg/footer-bg.png')] bg-cover bg-center bg-fixed"
     >
-
       <motion.div
         style={{ x: sx, y: sy }}
         className="pointer-events-none absolute w-24 h-24 border border-[#102030]/30 rounded-[26px] opacity-70"
       />
- 
+
       <div className="pointer-events-none absolute inset-0 opacity-[0.55]">
         <div className="absolute inset-x-0 top-0 h-px bg-[#102030]/5" />
         <div className="absolute inset-y-0 left-0 w-px bg-[#102030]/10" />
@@ -82,10 +82,11 @@ export default function Footer() {
             </motion.div>
             <div className="max-w-xs text-center sm:text-left">
               <p className="text-sm text-[#102030]/70 leading-relaxed">
-                Medcrave Biomedicals delivers high-purity biomedical ingredients for global healthcare brands.
+                Medcrave Biomedicals delivered high accuracy, diagnostic monitoring solutions
+                and instrument equipment for global healthcare brands.
               </p>
               <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-[#102030]/40">
-                Precision • Purity • Consistency
+                Precision • Accuracy • Consistency
               </p>
             </div>
           </motion.div>
@@ -107,14 +108,38 @@ export default function Footer() {
           className="mt-10 flex flex-col gap-6 border-t border-[#102030]/10 pt-6 md:flex-row md:items-center md:justify-between"
         >
           <div className="space-y-1 text-xs text-[#102030]/60">
-            <p>Phone: <span className="text-[#102030]/80">+91 98765 43210</span></p>
-            <p>Email: <span className="text-[#102030]/80">support@medcrave.in</span></p>
-            <p>Address: <span className="text-[#102030]/80">Bilaspur, Chhattisgarh</span></p>
+            <p>
+              Phone: <span className="text-[#102030]/80">+91 7208929089</span>
+            </p>
+            <p>
+              Email:{" "}
+              <span className="text-[#102030]/80">
+                contact@medcravebiomedicals.in
+              </span>
+            </p>
+            <p>
+              Time: <span className="text-[#102030]/80">9:30 AM – 6:39 PM</span>
+            </p>
+            <p>
+              Address:{" "}
+              <span className="text-[#102030]/80">
+                Head Office: 106, Mahalaxmi Square, near Tata Power Signal,
+                Kalyan Shill Road, Dombivli East – 421203
+              </span>
+            </p>
+            <p>
+              <span className="text-[#102030]/80">
+                Branch Office: 10, Om Sai Residency, Near Nilje Station,
+                Lodha Heaven, Nilje, Dombivli East – 421204
+              </span>
+            </p>
           </div>
 
           <div className="flex flex-col items-start gap-4 md:items-end">
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-[0.18em] text-[#102030]/40">Stay informed</span>
+              <span className="text-xs uppercase tracking-[0.18em] text-[#102030]/40">
+                Stay informed
+              </span>
               <TbPlus className="h-3.5 w-3.5 text-[#C8A55B]" />
             </div>
 
@@ -154,7 +179,7 @@ export default function Footer() {
 
             <div className="hidden items-center gap-1 text-[11px] text-[#102030]/50 md:flex">
               <TbPlus className="h-3 w-3 text-[#C8A55B]" />
-              <span>Royal biomedical standard</span>
+              <span>Precision biomedical standard</span>
             </div>
           </div>
         </motion.div>
@@ -173,7 +198,10 @@ function FooterColumn({ title, links }: { title: string; links: any[] }) {
       <ul className="space-y-1.5 text-[13px] text-[#102030]/65">
         {links.map((link) => (
           <li key={link.label}>
-            <a href={link.href} className="inline-flex items-center gap-1 hover:text-[#102030]/100 transition-colors">
+            <a
+              href={link.href}
+              className="inline-flex items-center gap-1 hover:text-[#102030]/100 transition-colors"
+            >
               {link.label}
             </a>
           </li>
