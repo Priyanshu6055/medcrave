@@ -39,12 +39,11 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState<boolean>(false);
 
-  // ✔ Correct typing for setTimeout
-  const [hoverTimeout, setHoverTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [hoverTimeout, setHoverTimeout] =
+    useState<ReturnType<typeof setTimeout> | null>(null);
 
   const [categories, setCategories] = useState<string[]>([]);
 
-  // ⭐ MEDCRAVE THEME COLORS (TYPE SAFE)
   const primary = "#7A3283";
   const secondary = "#85CD7C";
 
@@ -55,9 +54,6 @@ export default function Navbar() {
     (v) => `0 6px 18px rgba(122, 50, 131, ${v})`
   );
 
-  // ----------------------------
-  //  FETCH CATEGORIES (Typed)
-  // ----------------------------
   useEffect(() => {
     fetch("/api/categories")
       .then((res) => res.json())
@@ -112,8 +108,6 @@ export default function Navbar() {
       }`}
     >
       <div className="container-global px-6 flex justify-between items-center max-w-7xl mx-auto">
-        
-        {/* LOGO */}
         <Link href="/" className="relative flex items-center group">
           <div className="h-10 md:h-25 overflow-hidden rounded-lg">
             <motion.img
@@ -125,7 +119,6 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* DESKTOP NAVIGATION */}
         <nav className="hidden md:flex items-center space-x-1 font-medium">
           {links.map((link) =>
             link.subLinks ? (
@@ -137,7 +130,9 @@ export default function Navbar() {
               >
                 <button
                   className={`flex items-center gap-1.5 py-2 px-4 rounded-full transition-colors text-sm hover:bg-slate-50 ${
-                    openDropdown === link.name ? `text-[${primary}]` : "text-slate-700"
+                    openDropdown === link.name
+                      ? `text-[${primary}]`
+                      : "text-slate-700"
                   }`}
                 >
                   {link.name}
@@ -158,7 +153,10 @@ export default function Navbar() {
                       className="absolute left-1/2 -translate-x-1/2 mt-3 w-[650px] bg-white rounded-3xl border border-slate-200 p-6 shadow-2xl"
                     >
                       <div className="mb-4 flex items-center gap-2 pb-3 border-b border-slate-50">
-                        <LayoutGrid size={16} className={`text-[${primary}]`} />
+                        <LayoutGrid
+                          size={16}
+                          className={`text-[${primary}]`}
+                        />
                         <span className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
                           Our Collections
                         </span>
@@ -202,18 +200,12 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* INQUIRY BUTTON */}
         <div className="hidden md:flex items-center ml-4">
           <Link href="/contact">
-            <Button
-              className="rounded-xl"
-            >
-              Inquiry
-            </Button>
+            <Button className="rounded-xl">Inquiry</Button>
           </Link>
         </div>
 
-        {/* MOBILE TOGGLE */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden p-2"
@@ -223,7 +215,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE MENU */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -270,35 +261,12 @@ export default function Navbar() {
               </div>
             ))}
 
-            <div>
-              <Link href="/contact">
-                <Button
-                  className="rounded-xl"
-                >
-                  Inquiry
-                </Button>
-              </Link>
-            </div>
+            <Link href="/contact">
+              <Button className="rounded-xl">Inquiry</Button>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: ${primary};
-        }
-      `}</style>
     </motion.header>
   );
 }
