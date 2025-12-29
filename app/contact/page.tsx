@@ -51,14 +51,16 @@ export default function ContactPage() {
                 Phone Support
               </h3>
 
-              <p className="text-slate-500 mb-4 text-sm">Mon–Sat from 9am to 6pm</p>
+              <p className="text-slate-500 mb-4 text-sm">
+                Mon–Sat from 9.30 am to 6.39 pm
+              </p>
 
               <a
-                href="tel:+919354754756"
+                href="tel:+91 7208929089"
                 className="text-lg font-semibold flex items-center gap-2 transition-all"
                 style={{ color: SECONDARY }}
               >
-                +91 93547 54756
+                +91 7208929089
               </a>
             </div>
 
@@ -82,14 +84,16 @@ export default function ContactPage() {
                 Email Us
               </h3>
 
-              <p className="text-slate-500 mb-4 text-sm">For inquiries & support</p>
+              <p className="text-slate-500 mb-4 text-sm">
+                For inquiries & support
+              </p>
 
               <a
-                href="mailto:info@medcravebiomedicals.com"
-                className="text-lg font-semibold transition-all"
+                href="mailto:contact@medcravebiomedicals.in"
+                className="text-base md:text-lg font-semibold break-all transition-all"
                 style={{ color: SECONDARY }}
               >
-                info@medcravebiomedicals.com
+                contact@medcravebiomedicals.in
               </a>
             </div>
 
@@ -113,9 +117,15 @@ export default function ContactPage() {
                 Office Address
               </h3>
 
-              <p className="text-slate-600 leading-relaxed">
-                Ambernath, Thane,<br />
-                Maharashtra, India
+              <p className="text-sm md:text-base text-slate-600 leading-relaxed space-y-2">
+                <span className="block">
+                  <strong>Head Office:</strong> 106, Mahalaxmi Square, near Tata Power Signal,
+                  Kalyan Shill Road, Dombivli East – 421203
+                </span>
+                <span className="block">
+                  <strong>Branch Office:</strong> 10, Om Sai Residency, Near Nilje Station,
+                  Lodha Heaven, Nilje, Dombivli East – 421204
+                </span>
               </p>
             </div>
           </div>
@@ -136,10 +146,11 @@ export default function ContactPage() {
                 src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3767.5271344210805!2d73.11458967520893!3d19.215845082017733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDEyJzU3LjAiTiA3M8KwMDcnMDEuOCJF!5e0!3m2!1sen!2sin!4v1765370537498!5m2!1sen!2sin"
               />
 
-              <div className="absolute bottom-6 left-6 bg-white py-3 px-5 rounded-lg shadow-xl border"
+              <div
+                className="absolute bottom-6 left-6 bg-white py-3 px-5 rounded-lg shadow-xl border"
                 style={{ borderColor: `${PRIMARY}22` }}
               >
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                   Locate Us
                 </span>
                 <span className="font-bold" style={{ color: PRIMARY }}>
