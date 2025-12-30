@@ -52,7 +52,7 @@ export default function ContactPage() {
               </h3>
 
               <p className="text-slate-500 mb-4 text-sm">
-                Mon–Sat from 9.30 am to 6.39 pm
+                Mon–Sat from 9.30 am to 6.30 pm
               </p>
 
               <a
