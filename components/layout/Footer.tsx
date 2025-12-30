@@ -118,7 +118,7 @@ export default function Footer() {
               </span>
             </p>
             <p>
-              Time: <span className="text-[#102030]/80">9:30 AM – 6:39 PM</span>
+              Time: <span className="text-[#102030]/80">9:30 AM – 6:30 PM</span>
             </p>
             <p>
               Address:{" "}
