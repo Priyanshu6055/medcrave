@@ -119,7 +119,7 @@ export default function AboutPreview() {
 
               {/* PLAY BUTTON */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button
+                {/* <button
                   className="
                     bg-white/90 backdrop-blur 
                     p-5 rounded-full shadow-2xl 
@@ -128,7 +128,7 @@ export default function AboutPreview() {
                   style={{ color: PRIMARY }}
                 >
                   <Play fill={PRIMARY} size={24} />
-                </button>
+                </button> */}
               </div>
 
               {/* Facility Tour Label */}
