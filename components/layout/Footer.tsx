@@ -8,10 +8,10 @@ import { TbPlus } from "react-icons/tb";
 
 const footerLinks = {
   products: [
-    { label: "Medical Equipments", href: "/products/medical-equipments" },
-    { label: "Medical Devices", href: "/products/medical-devices" },
-    { label: "POCT Products", href: "/products/poct-products" },
-    { label: "Laboratory & Diagnostic Products", href: "/products/lab-diagnostic-products" },
+    { label: "Medical Equipments", href: "/products" },
+    { label: "Medical Devices", href: "/products" },
+    { label: "POCT Products", href: "/products" },
+    { label: "Laboratory & Diagnostic Products", href: "/products" },
   ],
   company: [
     { label: "About Medcrave", href: "/about" },
