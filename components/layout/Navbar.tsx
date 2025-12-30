@@ -208,7 +208,7 @@ export default function Navbar() {
             <Button
               className="rounded-xl"
             >
-              Inquiry
+              Enquiry
             </Button>
           </Link>
         </div>
