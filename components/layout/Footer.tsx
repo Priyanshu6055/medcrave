@@ -26,10 +26,10 @@ const footerLinks = {
 };
 
 const socialIcons = [
-  { Icon: FaFacebookF, href: "#" },
+  { Icon: FaFacebookF, href: "linkedin.com/in/medcrave-biomedicals-85223b398" },
   { Icon: FaTwitter, href: "#" },
-  { Icon: FaInstagram, href: "#" },
-  { Icon: FaLinkedinIn, href: "#" },
+  { Icon: FaInstagram, href: "https://www.instagram.com/medcravebiomedicals/" },
+  { Icon: FaLinkedinIn, href: "linkedin.com/in/medcrave-biomedicals-85223b398" },
 ];
 
 export default function Footer() {
