@@ -56,11 +56,11 @@ export default function ContactPage() {
               </p>
 
               <a
-                href="tel:+91 7208929089"
+                href="tel:+91 72089 29089"
                 className="text-lg font-semibold flex items-center gap-2 transition-all"
                 style={{ color: SECONDARY }}
               >
-                +91 7208929089
+                +91 72089 29089
               </a>
             </div>
 
@@ -85,7 +85,7 @@ export default function ContactPage() {
               </h3>
 
               <p className="text-slate-500 mb-4 text-sm">
-                For inquiries & support
+                For Enquiry & Support
               </p>
 
               <a
