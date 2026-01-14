@@ -5,9 +5,9 @@ import SmoothScrollProvider from "./lenis";
 import LoadingLayoutWrapper from "@/components/layout/LoadingLayoutWrapper";
 
 export const metadata = {
-  title: "Medcrave Biomedicals | Premium Herbal Extracts & Pharmaceutical Ingredients",
+  title: "Medcrave Biomedicals | Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
   description:
-    "Medcrave Biomedicals is a trusted manufacturer of high-quality herbal extracts, nutraceutical ingredients, and pharmaceutical raw materials. We deliver purity, consistency, and globally compliant biomedical solutions for healthcare, wellness, and research industries.",
+    "Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
 
   keywords: [
     "Medcrave Biomedicals",
