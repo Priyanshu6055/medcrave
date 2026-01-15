@@ -109,7 +109,7 @@ export default function Footer() {
         >
           <div className="space-y-1 text-xs text-[#102030]/60">
             <p>
-              Phone: <span className="text-[#102030]/80">+91 7208929089</span>
+              Phone: <span className="text-[#102030]/80">+91 72089 29089</span>
             </p>
             <p>
               Email:{" "}
