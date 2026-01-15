@@ -3,6 +3,8 @@ import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import SmoothScrollProvider from "./lenis";
 import LoadingLayoutWrapper from "@/components/layout/LoadingLayoutWrapper";
+import Script from "next/script";
+
 
 export const metadata = {
   title: "Medcrave Biomedicals | Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
@@ -71,6 +73,20 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-K38LGZDX3J"
+            strategy="afterInteractive"
+          />
+
+          <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K38LGZDX3J');
+          `}
+          </Script>
       </head>
 
       <body className="min-h-screen flex flex-col font-[Poppins] bg-white text-gray-900">
