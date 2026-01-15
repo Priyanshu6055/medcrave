@@ -28,9 +28,9 @@ export const metadata = {
   ],
 
   openGraph: {
-    title: "Medcrave Biomedicals | Trusted Herbal & Pharmaceutical Ingredient Manufacturer",
+    title: "Medcrave Biomedicals | Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
     description:
-      "Medcrave provides premium herbal extracts, nutraceutical ingredients, and pharma-grade biomedical materials manufactured with the highest purity and industry standards.",
+      "Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
     url: "https://www.medcravebiomedicals.com/",
     siteName: "Medcrave Biomedicals",
     images: [
@@ -38,7 +38,7 @@ export const metadata = {
         url: "/logos/medcrave-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Medcrave Biomedicals — Herbal & Pharmaceutical Ingredients",
+        alt: "Medcrave Biomedicals",
       },
     ],
     locale: "en_IN",
@@ -49,7 +49,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Medcrave Biomedicals",
     description:
-      "Premium herbal extracts & pharmaceutical ingredients manufactured with unmatched purity and consistency.",
+      "Medical Equipment Supplier, Diagnostics Devices supplier, Laboratory Hospital Devices, Point of Care Devices",
     images: ["/logos/medcrave-og.jpg"],
   },
 
