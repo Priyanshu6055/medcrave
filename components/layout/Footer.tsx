@@ -29,7 +29,7 @@ const socialIcons = [
   { Icon: FaFacebookF, href: "https://www.facebook.com/medcravebiomedicals/" },
   // { Icon: FaTwitter, href: "#" },
   { Icon: FaInstagram, href: "https://www.instagram.com/medcravebiomedicals/" },
-  { Icon: FaLinkedinIn, href: "https://www.linkedin.com/in/medcrave-biomedicals-85223b398" },
+  { Icon: FaLinkedinIn, href: "https://www.linkedin.com/in/medcrave-biomedicals-85223b398/" },
 ];
 
 export default function Footer() {
